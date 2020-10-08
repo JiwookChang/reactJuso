@@ -25,11 +25,6 @@ jobs:
       
       - name : Install Dependencies
         run : npm install
-      
-      - name : Install more
-        run : npm i axio
-      - name : Install more2
-        run : npm i styled-components
         
       - name : build
         run : npm run build
