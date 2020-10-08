@@ -8,7 +8,7 @@ import { common, pink } from "@material-ui/core/colors";
 
 const white = common.white;
 const pink600 = pink["600"];
-const pink500 = pink["500"];
+const pink500 = pink["50"];
 
 
 interface MonthlySalesProps {
@@ -29,7 +29,7 @@ const MonthlySales = (props: MonthlySalesProps) => {
     },
     header: {
       color: white,
-      backgroundColor: pink500,
+      backgroundColor: pink600,
       padding: 10,
     },
     title: {
@@ -42,7 +42,7 @@ const MonthlySales = (props: MonthlySalesProps) => {
   return (
     <Paper style={styles.paper}>
       <div style={{ ...styles.title, ...styles.header }}>
-        Monthly Sales
+        월별 가입
       </div>
       <div style={styles.div}>
         <ResponsiveContainer>

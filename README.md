@@ -1,13 +1,12 @@
-# React Redux CRM
+# React Juso
 
-> A reusable CRM project for real-world business based on React 16, React-Redux & Material-UI 4
+> A reusable Juso project for business based on React 16, React-Redux & Material-UI 4
 
 This is the very first version, feel free to use for any app. Contributions are always welcome!
 
 The goal of this starter project is to create reusable project for real-world business. To achieve this target, we need a solution which should include simple authentication process, restful API with token support and simple but elegant UI design.
 
 ### Features
-
 - This project is built on the top of React/Redux.
 - The UI component are mainly built on Material-UI.
 - This project uses Redux-Thunk to support back-end API.
@@ -20,34 +19,19 @@ The goal of this starter project is to create reusable project for real-world bu
 
 ### Live Demo
 
-[Demo](https://react-app-demo.harryho.org) The demo is just a proof of concept. It doesn't have back-end API and all features of master branch.
 
 ### Screenshots
-
-![Screenshot1](screenshots/screenshot-1.jpg)
-
-![Screenshot2](screenshots/screenshot-1.1.jpg)
-
-![Screenshot3](screenshots/screenshot-3.1.jpg)
-
-<!-- ![Screenshot4](screenshots/screenshot-4.jpg) -->
-
-----
-
-Storybook
-  
-![Screenshot4](screenshots/screenshot-6.jpg)
 
 
 ## Build Setup
 
 ```bash
 # Clone project
-git clone https://github.com/harryho/react-crm.git
+git clone https://github.com/JiwookChang/reactJuso.git
 
 
 # install the packages with npm
-cd react-crm
+cd reactJuso
 npm install
 
 # start the server with hot reload at localhost:4000
@@ -97,14 +81,6 @@ For detailed explanation on how things work, checkout following links please.
 - [React](https://facebook.github.io/react/)
 - [Redux](http://redux.js.org/)
 - [Material-UI](http://www.material-ui.com/)
-
-### Alternatives
-
-There are another two similar projects respectively built on the Vue.js and Angular. If you have interests in those technical stacks. You can find and clone those repositories below.
-
-- [Ng-MD-App](https://github.com/harryho/ng-md-app.git).
-- [Ng4Crm](https://github.com/harryho/ng4crm.git). (It is no longer maintained with latest Angular)
-- [Vue-Crm](https://github.com/harryho/vue-crm.git).
 
 ### Change log
 

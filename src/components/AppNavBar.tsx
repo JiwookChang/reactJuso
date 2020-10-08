@@ -25,7 +25,7 @@ interface AppNavBarProps {
 const AppNavBar: React.FC<AppNavBarProps> = ({ styles, handleDrawerToggle}) => {
 const handleClick = () => {
     window.open(
-      "https://github.com/harryho/react-crm",
+      "https://github.com/JiwookChang/reactJuso",
       undefined,
       undefined,
       false
@@ -49,7 +49,7 @@ const handleClick = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h5" className={style.title}>
-            Demo
+            MVP Pilot
           </Typography>
           <Tooltip title="GitHub" aria-label="add">
             <IconButton

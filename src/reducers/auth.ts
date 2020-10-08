@@ -4,26 +4,26 @@ import { User } from "../types";
 
 
 function isSignIned(): boolean {
-  const token = localStorage.getItem("react-crm-token")
+  const token = localStorage.getItem("react-juso-token")
   return token ? true : false
 }
 
 function getUser(): User {
-  const user = localStorage.getItem("react-crm-user")
+  const user = localStorage.getItem("react-juso-user")
   return user ? JSON.parse(user) : {} as User
 }
 function getToken(): string | undefined {
-  const token = localStorage.getItem("react-crm-token")
+  const token = localStorage.getItem("react-juso-token")
   return token ? token : undefined
 }
 function setTokenUser(token, user) {
-  localStorage.setItem("react-crm-token", token);
-  localStorage.setItem("react-crm-user", JSON.stringify(user));
+  localStorage.setItem("react-juso-token", token);
+  localStorage.setItem("react-juso-user", JSON.stringify(user));
 }
 
 function removeTokenUser(){
-      localStorage.removeItem("react-crm-token");
-    localStorage.removeItem("react-crm-user");
+      localStorage.removeItem("react-juso-token");
+    localStorage.removeItem("react-juso-user");
 }
 
 

@@ -22,7 +22,7 @@ import OrderFormPage from "./OrderFormPage";
 import OrderListPage from "./OrderListPage";
 import ProductFormPage from "./ProductFormPage";
 import ProductListPage from "./ProductListPage";
-import AboutPage from "./AboutPage";
+import JusoPage from "./JusoPage";
 import NotFoundPage from "./NotFoundPage";
 import ChangePasswordPage from "./ChangePasswordPage";
 
@@ -192,7 +192,7 @@ class App extends React.Component<AppProps, AppState> {
                 <Route exact path={`/products`} component={ProductListPage} />
                 <Route path={`/product/:id`} component={ProductFormPage} />
                 <Route path={`/newproduct`} component={ProductFormPage} />
-                <Route path={`/about`} component={AboutPage} />
+                <Route path={`/juso`} component={JusoPage} />
                 <Route path="/changepass" component={ChangePasswordPage} />
                 {/* <Route path="/404" component={NotFoundPage} />
                 <Redirect to="/404" /> */}

@@ -42,7 +42,7 @@ const LineBarChart = (props: LineBarChartProps) => {
 
   return (
     <Paper style={styles.paper}>
-      <span style={styles.title}>Website Analysis</span>
+      <span style={styles.title}>월별 민원</span>
 
       <div style={styles.clear} />
 
@@ -62,9 +62,9 @@ const LineBarChart = (props: LineBarChartProps) => {
                 <Tooltip />
                 <Legend />
                 <CartesianGrid stroke="#f5f5f5" />
-                <Area dataKey="amt" fill="#8884d8" stroke="#8884d8" />
-                <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-                <Line dataKey="uv" stroke="#ff7300" />
+                <Area dataKey="품질" fill="#8884d8" stroke="#8884d8" />
+                <Bar dataKey="속도" barSize={20} fill="#413ea0" />
+                <Line dataKey="기타" stroke="#ff7300" />
               </ComposedChart>
             </ResponsiveContainer>
           </div>

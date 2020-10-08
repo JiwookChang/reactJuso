@@ -236,7 +236,7 @@ Array [
       </a>
       <a
         className="MuiListItem-button"
-        href="/about"
+        href="/juso"
         onClick={[Function]}
       >
         <li
@@ -273,7 +273,7 @@ Array [
           <h6
             className="MuiTypography-root makeStyles-menuItem-238 MuiTypography-h6"
           >
-            About
+            Juso
           </h6>
         </li>
       </a>

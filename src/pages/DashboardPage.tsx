@@ -47,18 +47,18 @@ const DashboardPage = () => {
           <InfoBox
             Icon={ShoppingCart}
             spanBgColor={pink600}
-            title="Total Profit"
+            title="총수익"
             value="1500k"
           />
         </Grid>
         <Grid item style={styles.cell} xs={12} md={3}>
-          <InfoBox Icon={ThumbUp} spanBgColor={cyan600} title="Likes" value="4231" />
+          <InfoBox Icon={ThumbUp} spanBgColor={cyan600} title="평가" value="4231" />
         </Grid>
         <Grid item style={styles.cell} xs={12} md={3}>
           <InfoBox
             Icon={Assessment}
             spanBgColor={purple600}
-            title="Sales"
+            title="민원"
             value="460"
           />
         </Grid>
@@ -66,7 +66,7 @@ const DashboardPage = () => {
           <InfoBox
             Icon={Face}
             spanBgColor={orange600}
-            title="New Members"
+            title="신규고객"
             value="248"
           />
         </Grid>
