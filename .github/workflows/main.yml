@@ -34,8 +34,6 @@ jobs:
       
       - name : recovery1
         run : npm cache clean --force
-      - name : recovery2
-        run : npm install -g update-node
       - name : recovery3
         run : npm i -g npm-upgrade
       
