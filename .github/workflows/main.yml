@@ -37,8 +37,6 @@ jobs:
       
       - name : Install bcrypt
         run : npm i bcrypt
-      - name : Install Axio
-        run : npm i axio
       
       - name : Install react
         run : npm install react-scripts --save
