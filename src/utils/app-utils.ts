@@ -12,8 +12,8 @@ const SearchFilterOps = {
 };
 
 
-const SESSION_TOKEN_KEY = "vue-crm-token";
-const SESSION_USER_KEY = "vue-crm-user";
+const SESSION_TOKEN_KEY = "vue-juso-token";
+const SESSION_USER_KEY = "vue-juso-user";
 
 export function setToken(token: string): void {
   if (sessionStorage) {

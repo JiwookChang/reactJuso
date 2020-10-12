@@ -196,7 +196,7 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
     const { isFetching, page, totalPages, items } = this.state;
 
     return (
-      <PageBase title={'Products (' + productList.length + ')'} navigation="React CRM / Product">
+      <PageBase title={'Products (' + productList.length + ')'} navigation="React Juso / Product">
         {isFetching ? (
           <div>
             <SkeletonList />

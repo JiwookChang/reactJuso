@@ -63,7 +63,7 @@ const SignInPage: React.FC<SignInPageProps> = ({
       <div>
         <div style={styles.loginContainer}>
           <Paper style={styles.paper}>
-            <p style={styles.formHeader}>React Redux CRM</p>
+            <p style={styles.formHeader}>React Redux Juso</p>
             <p style={styles.ListSubheader}>Version 2.0.0</p>
             <Formik
               initialValues={{

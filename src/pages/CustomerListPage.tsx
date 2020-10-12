@@ -223,7 +223,7 @@ class CustomerListPage extends React.Component<
     return (
       <PageBase
         title={"Customers (" + customerList.length + ")"}
-        navigation="React CRM / Customer"
+        navigation="React Juso / Customer"
       >
         {isFetching ? (
           <div>

@@ -223,7 +223,7 @@ class OrderListPage extends React.Component<OrderListProps, OrderListState> {
     return (
       <PageBase
         title={"Orders (" + orderList.length + ")"}
-        navigation="React CRM / Order"
+        navigation="React Juso / Order"
       >
         {isFetching ? (
           <div>

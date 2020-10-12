@@ -37,7 +37,7 @@
     "url": "git+https://github.com/JiwookChang/reactJuso.git"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-juso"
   },
   "browserslist": {
     "production": [
