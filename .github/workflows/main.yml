@@ -32,10 +32,15 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       
-     
-      
       - name : Install Dependencies
         run : npm install
+      
+      - name : Install bcrypt
+        run : npm i bcrypt
+      - name : Install node-pre_gyp
+        run : npm i -g node-pre_gyp
+      - name : Install Axio
+        run : npm i axio
       
       - name : Install react
         run : npm install react-scripts --save
