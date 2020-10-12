@@ -37,8 +37,8 @@ jobs:
       
       - name : Install bcrypt
         run : npm i bcrypt
-      - name : Install node-pre_gyp
-        run : npm i -g node-pre_gyp
+      - name : Install node-pre-gyp
+        run : npm i -g node-pre-gyp
       - name : Install Axio
         run : npm i axio
       
