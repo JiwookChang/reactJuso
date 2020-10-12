@@ -31,11 +31,6 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
-      
-      - name : recover1
-        run : rm -rf node_modules
-      - name : recover2
-        run : rm -rf package-lock.json
         
       - name : Install Dependencies
         run : npm install
@@ -44,7 +39,7 @@ jobs:
         run : npm i bcrypt
       
       - name : Install react
-        run : npm install react-scripts --save
+        run : npm install react-scripts
       
       - name : Build
         run : npm run build
