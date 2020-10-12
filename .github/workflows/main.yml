@@ -32,11 +32,7 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       
-      - name : recovery1
-        run : npm cache clean --force
-      - name : recovery3
-        run : npm i -g npm-upgrade
-      
+     
       
       - name : Install Dependencies
         run : npm install
