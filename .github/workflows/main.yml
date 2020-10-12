@@ -35,6 +35,9 @@ jobs:
       - name : Install Dependencies
         run : npm install
       
+      - name : Install react
+        run : npm install react-scripts --save
+      
       - name : Build
         run : npm run build
         
