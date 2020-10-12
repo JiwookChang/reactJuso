@@ -34,6 +34,9 @@ jobs:
       
       - name : recover1
         run : rm -rf node_modules
+      - name : recover2
+        run : rm -rf package-lock.json
+        
       - name : Install Dependencies
         run : npm install
       
