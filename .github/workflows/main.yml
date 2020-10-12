@@ -31,6 +31,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
+      
+      - name : recover1
+        run : rm -rf node_modules
+              rm -rf package-lock.json
         
       - name : Install Dependencies
         run : npm install
@@ -42,7 +46,7 @@ jobs:
         run : npm install react-scripts
       
       - name : Build
-        run : npm run build
+        run : npm start
         
       - name: Deploy                  # S3에 배포하기
         env:
