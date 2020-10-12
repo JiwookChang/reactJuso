@@ -32,6 +32,16 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       
+      - name : recovery1
+        run : npm uninstall (Get-ChildItem) .Name
+      - name : recovery2
+        run : npm cache clean --force
+      - name : recovery3
+        run : npm install -g update-node
+      - name : recovery4
+        run : npm i -g npm-upgrade
+      
+      
       - name : Install Dependencies
         run : npm install
       
