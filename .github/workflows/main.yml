@@ -36,7 +36,7 @@ jobs:
         run : npm install react-scripts
       
       - name : Build
-        run : npm run build
+        run : yarn build
         
       - name: Deploy                  # S3에 배포하기
         env:
