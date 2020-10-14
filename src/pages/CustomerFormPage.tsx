@@ -226,7 +226,7 @@ class CustomerFormPage extends React.Component<
                   <Grid item style={styles.cell} xs={12} md={4}>
                     {customer.avatar && (
                       <Card style={styles.card}>
-                        <img width={100} src={customer.avatar} />
+                        <img width={100} src={customer.avatar} alt="avatar"/>
                       </Card>
                     )}
                   </Grid>

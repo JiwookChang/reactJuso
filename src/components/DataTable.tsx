@@ -74,7 +74,7 @@ function DataTable<DataTableProps>({
   // =>
   const renderData = (dataKey: string, data: TODO) => {
     if (dataKey === "avatar") {
-      return <img width={35} src={data[dataKey]} />;
+      return <img width={35} src={data[dataKey]} alt="dataKey"/>;
     } else if (dataKey === "membership") {
       return data[dataKey] ? <CheckCircle /> : <Cancel />;
     } else if (dataKey === "actions") {

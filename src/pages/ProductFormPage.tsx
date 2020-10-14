@@ -14,7 +14,7 @@ import { TextField } from "formik-material-ui";
 
 import { thunkApiCall, thunkApiQCall } from "../services/thunks";
 import { Product,  Category } from "../types";
-import { LinearProgress, Grid, MenuItem } from "@material-ui/core";
+import { LinearProgress, Grid, MenuItem, Avatar } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import {
   ApiAction,
@@ -193,7 +193,7 @@ class ProductFormPage extends React.Component<
                   <Grid item style={styles.cell} xs={12} md={4}>
                     {product && product.avatar && (
                       <Card style={styles.card}>
-                        <img width={100} src={product.avatar} />
+                        <img width={100} src={product.avatar} alt="avatar"/>
                       </Card>
                     )}
                   </Grid>
