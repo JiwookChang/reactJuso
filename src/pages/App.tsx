@@ -2,7 +2,7 @@ import * as React from "react";
 import "../styles.scss";
 // import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import AppNavBar from "../components/AppNavBar";
 import AppNavDrawer from "../components/AppNavDrawer";
 import { WithWidth } from "@material-ui/core/withWidth";
@@ -23,7 +23,6 @@ import OrderListPage from "./OrderListPage";
 import ProductFormPage from "./ProductFormPage";
 import ProductListPage from "./ProductListPage";
 import JusoPage from "./JusoPage";
-import NotFoundPage from "./NotFoundPage";
 import ChangePasswordPage from "./ChangePasswordPage";
 
 const isSmallsWindowScreen = () => {

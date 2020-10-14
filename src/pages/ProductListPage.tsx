@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 import { thunkApiCall, thunkApiQCall } from '../services/thunks';
-import { NEW_PRODUCT, LIST_PRODUCT, ApiAction, QActions, FETCHING_PRODUCT, DELETE_PRODUCT } from '../store/types';
+import { NEW_PRODUCT, LIST_PRODUCT, ApiAction, QActions, DELETE_PRODUCT } from '../store/types';
 import { Product, SearchFilter } from '../types';
 import Alert from '../components/Alert';
 import DataTable from '../components/DataTable';

@@ -98,7 +98,7 @@ export function buildJsonServerQuery (filters: TODO){ // (searchVm: TODO) {
   let filterQuery = "";
   if (filters && filters.length > 0) {
     filterQuery = filters.reduce((prev: '', f: TODO) => {
-      if (f.val && f.val !== "", f.val !== null && f.val !== undefined) {
+      if (f.val && f.val !== "" && f.val !== null && f.val !== undefined) {
         let qString = ''
         qString += f.property;
         qString += f.op;

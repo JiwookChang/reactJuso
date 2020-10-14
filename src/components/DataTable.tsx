@@ -10,7 +10,7 @@ import ContentCreate from "@material-ui/icons/Create";
 import ActionDelete from "@material-ui/icons/Delete";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import Cancel from "@material-ui/icons/Cancel";
-import { pink, grey, green, common } from "@material-ui/core/colors";
+import {  grey, green, common } from "@material-ui/core/colors";
 import { Container, Tooltip } from "@material-ui/core";
 
 const grey500 = grey["500"];
