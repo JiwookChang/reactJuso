@@ -22,6 +22,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
+      
+      - name : Cache clean & Remove node_modules
+        run : npm cache clean --force
+              rm -rf node_modules && rm ./package-lock.json
          
       - name : Install Dependencies
         run : npm install
