@@ -22,15 +22,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
-
-      - name: Cache node modules      # node modules 캐싱
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
          
       - name : Install Dependencies
         run : npm install
@@ -39,7 +30,7 @@ jobs:
         run : npm install react-scripts
       
       - name : Build
-        run : npm run-script build
+        run : npm run build
         
       - name: Deploy                  # S3에 배포하기
         env:
