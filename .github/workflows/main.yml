@@ -22,6 +22,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
+      
+      - name : Cache clean
+        run : npm cache clean --force
+      
+      - name : Remove node_modules
+        run : rm -rf node_modules
          
       - name : Install Dependencies
         run : npm install
@@ -30,7 +36,7 @@ jobs:
         run : npm install react-scripts
       
       - name : Build
-        run : npm run build
+        run : yarn build
         
       - name: Deploy                  # S3에 배포하기
         env:
