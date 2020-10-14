@@ -23,9 +23,11 @@ jobs:
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
       
-      - name : Cache clean & Remove node_modules
+      - name : Cache clean
         run : npm cache clean --force
-              rm -rf node_modules && rm ./package-lock.json
+      
+      - name : Remove node_modules
+        run : rm -rf node_modules && rm ./package-lock.json
          
       - name : Install Dependencies
         run : npm install
