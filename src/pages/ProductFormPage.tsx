@@ -14,7 +14,7 @@ import { TextField } from "formik-material-ui";
 
 import { thunkApiCall, thunkApiQCall } from "../services/thunks";
 import { Product,  Category } from "../types";
-import { LinearProgress, Grid, MenuItem, Avatar } from "@material-ui/core";
+import { LinearProgress, Grid, MenuItem } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import {
   ApiAction,
