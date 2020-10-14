@@ -1,6 +1,6 @@
 {
-  "name": "react-juso",
-  "version": "1.0.1",
+  "name": "reactJuso",
+  "version": "1.10.1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.13",
@@ -38,7 +38,7 @@
     "url": "git+https://github.com/JiwookChang/reactJuso.git"
   },
   "eslintConfig": {
-    "extends": "react-juso"
+    "extends": "reactJuso"
   },
   "browserslist": {
     "production": [

@@ -4,26 +4,26 @@ import { User } from "../types";
 
 
 function isSignIned(): boolean {
-  const token = localStorage.getItem("react-juso-token")
+  const token = localStorage.getItem("reactJuso-token")
   return token ? true : false
 }
 
 function getUser(): User {
-  const user = localStorage.getItem("react-juso-user")
+  const user = localStorage.getItem("reactJuso-user")
   return user ? JSON.parse(user) : {} as User
 }
 function getToken(): string | undefined {
-  const token = localStorage.getItem("react-juso-token")
+  const token = localStorage.getItem("reactJuso-token")
   return token ? token : undefined
 }
 function setTokenUser(token, user) {
-  localStorage.setItem("react-juso-token", token);
-  localStorage.setItem("react-juso-user", JSON.stringify(user));
+  localStorage.setItem("reactJuso-token", token);
+  localStorage.setItem("reactJuso-user", JSON.stringify(user));
 }
 
 function removeTokenUser(){
-      localStorage.removeItem("react-juso-token");
-    localStorage.removeItem("react-juso-user");
+      localStorage.removeItem("reactJuso-token");
+    localStorage.removeItem("reactJuso-user");
 }
 
 

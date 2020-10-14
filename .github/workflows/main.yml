@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: juso workflow
+name: reactJuso
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -49,4 +49,4 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            build s3://react-juso
+            build s3://reactJuso
