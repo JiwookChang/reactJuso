@@ -4,7 +4,7 @@ declare global {
   interface Window {
     kakao: any;
   }
-}
+} 
 
 const App: React.FC = () => {
   useEffect(() => {
