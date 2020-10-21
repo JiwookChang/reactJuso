@@ -22,28 +22,29 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
-      
-      - name : Cache clean
-        run : npm cache clean --force
-      
-      - name : Remove node_modules
-        run : rm -rf node_modules
-         
+     
+      - name: Cache node modules      # node modules 캐싱
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+            
       - name : Install Dependencies
         run : npm install
       
-      - name : Install react
-        run : npm install react-scripts
-      
       - name : Build
-        run : yarn build
+        run : npm run build
         
-      - name: Deploy                  # S3에 배포하기
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws s3 cp \
-            --recursive \
-            --region ap-northeast-2 \
-            build s3://reactJuso
+          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWSACCESSKEYID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWSSECRETKEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "build"
