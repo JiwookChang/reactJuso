@@ -23,7 +23,7 @@ const styles = {
   navigation: {
     fontSize: 15,
     fontWeight: 400, //TypographyStyle.fontWeightLight,
-    color: grey600,
+    color: grey600, 
     // paddingBottom: 15,
     display: "block",
   },
