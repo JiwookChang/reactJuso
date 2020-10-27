@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { listPageStyle } from "../styles";
+import PageBase from "../components/PageBase";
 
 const grey600 = grey["600"];
 
@@ -17,15 +18,21 @@ const styles = {
     // paddingBottom: 15,
     display: "block",
   },
-  container: {
-    marginTop: "3em",
+  title: {
+    fontSize: 24,
+    fontWeight: 500, 
+    marginBottom: 20,
   },
-  cell: {
-    padding: "1em",
+  paper: {
+    padding: 10,
   },
-  content:{
-    paddingTop:60,
-    padding:20,
+  main:{
+    paddingTop: 80,
+    paddingLeft: 30,
+    paddingRight: 30
+  },
+  clear: {
+    clear: "both" as TODO
   }
 };
 
@@ -60,35 +67,40 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div className="App" style={styles.content}>
-    <Grid container style={styles.container} spacing={3}>
-      <Grid item style={styles.cell} xs={12} md={6}>
-        <div id="jusoSearch" style={{ width: "50vw", height: "85vh" }}>
-        <Grid item xs={12} style={stylesL.searchField}>
-          <TextField
-            // placeholder="Order Reference"
-            label="주소 검색"
-            fullWidth={true}
-            name="reference"
-          />
+    <PageBase
+        title={"주소검색"}
+        navigation="React Juso / SearchJuso"
+      >      
+      <div>
+        <Grid container >
+          <Grid item xs={12} md={6}>
+            <div id="jusoSearch" style={{ width:'100%', height: "100%" }}>
+                <Grid item xs={12} style={stylesL.searchField}>
+                  <TextField
+                    // placeholder="Order Reference"
+                    label="주소 검색"
+                    fullWidth={true}
+                    name="reference"
+                  />
+                </Grid>
+                <Grid item xs={12} style={stylesL.searchField}>
+                  <Button
+                    variant="contained"
+                    style={stylesL.searchButton}
+                    //onClick={this.handleSearch}
+                    color="secondary"
+                  >
+                    검색
+                  </Button>
+                </Grid>
+            </div>
           </Grid>
-          <Grid item xs={12} style={stylesL.searchField}>
-          <Button
-            variant="contained"
-            style={stylesL.searchButton}
-            //onClick={this.handleSearch}
-            color="secondary"
-          >
-            검색
-          </Button>
+          <Grid item xs={12} md={6}>
+            <div id="map" style={{ width: "100%", height: "70vh" }} />
           </Grid>
-        </div>
-      </Grid>
-      <Grid item style={styles.cell} xs={12} md={6}>
-        <div id="map" style={{ width: "50vw", height: "85vh" }} />
-      </Grid>
-    </Grid>
-  </div>
+        </Grid>
+      </div>
+    </PageBase>
   );
 }
 
