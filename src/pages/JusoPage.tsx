@@ -1,5 +1,39 @@
 import React, { useEffect } from 'react';
 
+import { grey } from "@material-ui/core/colors";
+import { Grid } from "@material-ui/core";
+import Search from "@material-ui/icons/Search";
+//import PageBase from "../components/PageBase";
+//import { connect } from "react-redux";
+//import { getAction } from "../actions/order";
+import Drawer from "@material-ui/core/Drawer";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { listPageStyle } from "../styles";
+
+const grey600 = grey["600"];
+
+const stylesL = listPageStyle;
+const styles = {
+  navigation: {
+    fontSize: 15,
+    fontWeight: 400, //TypographyStyle.fontWeightLight,
+    color: grey600, 
+    // paddingBottom: 15,
+    display: "block",
+  },
+  container: {
+    marginTop: "3em",
+  },
+  cell: {
+    padding: "1em",
+  },
+  content:{
+    paddingTop:60,
+    padding:20,
+  }
+};
+
 declare global {
   interface Window {
     kakao: any;
@@ -31,9 +65,35 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div className="App">
-      <div id="map" style={{ width: "100vw", height: "100vh" }} />
-    </div>
+    <div className="App" style={styles.content}>
+    <Grid container style={styles.container} spacing={3}>
+      <Grid item style={styles.cell} xs={12} md={6}>
+        <div id="jusoSearch" style={{ width: "50vw", height: "85vh" }}>
+        <Grid item xs={12} style={stylesL.searchField}>
+          <TextField
+            // placeholder="Order Reference"
+            label="주소 검색"
+            fullWidth={true}
+            name="reference"
+          />
+          </Grid>
+          <Grid item xs={12} style={stylesL.searchField}>
+          <Button
+            variant="contained"
+            style={stylesL.searchButton}
+            //onClick={this.handleSearch}
+            color="secondary"
+          >
+            검색
+          </Button>
+          </Grid>
+        </div>
+      </Grid>
+      <Grid item style={styles.cell} xs={12} md={6}>
+        <div id="map" style={{ width: "50vw", height: "85vh" }} />
+      </Grid>
+    </Grid>
+  </div>
   );
 }
 

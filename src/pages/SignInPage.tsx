@@ -67,8 +67,8 @@ const SignInPage: React.FC<SignInPageProps> = ({
             <p style={styles.ListSubheader}>Version 2.0.0</p>
             <Formik
               initialValues={{
-                username: 'admin@test.com',
-                password: 'password',
+                username: 'oss@test.com',
+                password: 'skcc',
               }}
               validate={values => {
                 const errors: Partial<SignInState> = {};

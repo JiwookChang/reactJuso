@@ -132,7 +132,7 @@ export function deleteData(action: string): Promise<TODO> {
 
 export function login(action: string, _method: HttpMethod, data: TODO): Promise<TODO> {
   return new Promise(function (resolve, _reject) {
-    if (data.username === "admin@test.com" && data.password === "password") {
+    if (data.username === "oss@test.com" && data.password === "skcc") {
       const { accessToken: accessToken, user } = ds.token;
       setTimeout(resolve, 300, {
         token: accessToken,

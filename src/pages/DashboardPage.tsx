@@ -37,7 +37,7 @@ const styles = {
     paddingTop:60,
     padding:20,
   }
-};
+}; 
 
 const DashboardPage = () => {
   return (
