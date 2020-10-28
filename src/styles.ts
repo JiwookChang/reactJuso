@@ -106,5 +106,46 @@ export const formPageStyles ={
   },
 }
 
+export const jusoPageStyle = {
+  fab: {
+    top: 'auto' as TODO,
+    right: 20,
+    bottom: 20,
+    left: 'auto' as TODO,
+    position: 'fixed' as TODO,
+    marginRight: 20,
+    backgroundColor: pink500, // {pink500}
+  },
+  fabSearch: {
+    top: 'auto' as TODO,
+    right: 100,
+    bottom: 20,
+    left: 'auto' as TODO,
+    position: 'fixed' as TODO,
+    marginRight: 20,
+    backgroundColor: 'lightblue' as TODO,
+  },
+
+  drawer: {
+    backgroundColor: 'lightgrey',
+  },
+  searchDrawer: {
+    overflow: 'hidden',
+    width: 280,
+  },
+  searchGrid: {
+    width: 250,
+  },
+  searchField: {
+    margin:10,
+    marginTop : 0,
+  },
+  searchButton: {
+    marginTop:10,
+    marginRight:10,
+    height: 38
+  },
+}
+
 export default styles;
 

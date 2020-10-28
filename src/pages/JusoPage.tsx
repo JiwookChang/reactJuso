@@ -1,40 +1,12 @@
 import React, { useEffect } from 'react';
 
-import { grey } from "@material-ui/core/colors";
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { listPageStyle } from "../styles";
+import { jusoPageStyle } from "../styles";
 import PageBase from "../components/PageBase";
 
-const grey600 = grey["600"];
-
-const stylesL = listPageStyle;
-const styles = {
-  navigation: {
-    fontSize: 15,
-    fontWeight: 400, //TypographyStyle.fontWeightLight,
-    color: grey600, 
-    // paddingBottom: 15,
-    display: "block",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 500, 
-    marginBottom: 20,
-  },
-  paper: {
-    padding: 10,
-  },
-  main:{
-    paddingTop: 80,
-    paddingLeft: 30,
-    paddingRight: 30
-  },
-  clear: {
-    clear: "both" as TODO
-  }
-};
+const styles = jusoPageStyle;
 
 declare global {
   interface Window {
@@ -65,38 +37,35 @@ const App: React.FC = () => {
     marker.setMap(map);
 
   }, [])
-
+  
   return (
     <PageBase
-        title={"주소검색"}
+        title={"Address"}
         navigation="React Juso / SearchJuso"
       >      
       <div>
         <Grid container >
           <Grid item xs={12} md={6}>
             <div id="jusoSearch" style={{ width:'100%', height: "100%" }}>
-                <Grid item xs={12} style={stylesL.searchField}>
+                <Grid style={{ width:'100%', display: "flex" }}>
                   <TextField
                     // placeholder="Order Reference"
                     label="주소 검색"
                     fullWidth={true}
                     name="reference"
-                  />
-                </Grid>
-                <Grid item xs={12} style={stylesL.searchField}>
+                    style={styles.searchField}/>
                   <Button
                     variant="contained"
-                    style={stylesL.searchButton}
+                    style={styles.searchButton}
                     //onClick={this.handleSearch}
-                    color="secondary"
-                  >
+                    color="secondary">
                     검색
                   </Button>
                 </Grid>
             </div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <div id="map" style={{ width: "100%", height: "70vh" }} />
+            <div id="map" style={{ width: "100%", height: "65vh" }} />
           </Grid>
         </Grid>
       </div>
