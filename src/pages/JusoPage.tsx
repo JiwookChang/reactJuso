@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { jusoPageStyle } from "../styles";
 import PageBase from "../components/PageBase";
+import  List from "@material-ui/core/List";
+import { ListItemText } from "@material-ui/core";
+
+import axios from 'axios';
 
 const styles = jusoPageStyle;
 
@@ -14,28 +18,127 @@ declare global {
   }
 }
 
-const App: React.FC = () => {
-  useEffect(() => {
+let container = null;
+let options = null;
+let map = null;
+let marker = null;
 
-    let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    let options = { //지도를 생성할 때 필요한 기본 옵션
+function onClick(query) {
+  
+  var REST_API_KEY = '51093cfa7f4035a413a68262c7862182';
+  axios({
+      method: 'get',
+      url: 'https://dapi.kakao.com//v2/local/search/address.json?query='+query,
+      headers: {'Authorization': 'KakaoAK ' + REST_API_KEY }
+    })
+    .then(function (response) {
+      let allRepos = Array.from(response.data.documents);
+      console.log(allRepos[0]['x']);
+      console.log(allRepos[0]['y']);
+      mapSetting("change", allRepos[0]['x'], allRepos[0]['y']);
+    });
+}
+
+function mouseOver(e) {
+  e.target.style.background = 'gray';
+}
+function mouseOut(e) {
+  e.target.style.background = '#fff';
+}
+
+const jusoList = (props) => {
+  const { repos } = props;
+  if (!repos || repos.length === 0) return <p></p>;
+
+  const lineStyle = {
+    lineS :{
+      lineHeight: 2,
+      paddingLeft:'10px',
+      fontWeight: 400,
+    },
+    
+  };
+  const listItems = repos.map((item) =>
+    <ListItemText
+          onMouseOver={mouseOver}
+          onMouseOut={mouseOut}
+          id={item.roadAddr}
+          key={item.roadAddr}
+          primary={item.roadAddr}
+          primaryTypographyProps={{ style: lineStyle.lineS }}
+          onClick ={() => onClick(item.roadAddr)}
+        />
+  );
+  
+  return (
+    <List>
+      <div>
+        {listItems}
+      </div>
+    </List>
+  );
+};
+
+const mapSetting = (mode, x, y) => {  
+  if(mode === "start"){
+    container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    options = { //지도를 생성할 때 필요한 기본 옵션
       center: new window.kakao.maps.LatLng(37.405732, 127.098376), //지도의 중심좌표.
-      level: 3 //지도의 레벨(확대, 축소 정도)
+      level: 4 //지도의 레벨(확대, 축소 정도)
     };
-
-    let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-    // 마커가 표시될 위치입니다
-    const markerPosition  = new window.kakao.maps.LatLng(37.405732, 127.098376);
+    map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
     // 마커 생성
-    const marker = new window.kakao.maps.Marker({
-        position: markerPosition
+    marker = new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(37.405732, 127.098376),
+        map: map
     });
 
     // 마커 표시
     marker.setMap(map);
 
+  }else{
+    marker.setMap(null);
+    marker = new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(y, x),
+        map: map,
+    });
+    marker.setMap(map);
+    map.setCenter(new window.kakao.maps.LatLng(y, x))
+  }
+};
+
+const App: React.FC = () => {
+  const ListLoading = jusoList;
+  const [appState, setAppState] = useState({
+    loading: false,
+    repos: null,
+  });
+  const [jusoTxt, setJusoTxt] = useState({
+    juso: null,
+  });
+
+  const searchJuso = () =>{
+    // const apiUrl = '/juso/findJuso';
+    // const apiParams = '?jusoId=1'
+    const apiUrl = '/addrlink/addrLinkApi.do';
+    const apiParams = '?confmKey=devU01TX0FVVEgyMDIwMTAyOTA5NTg0MTExMDM0MzM=&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
+    
+    axios.get(apiUrl+apiParams)
+    .then(res => {
+      let allRepos = Array.from(res.data.results.juso);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
+      setAppState({ loading: false, repos: allRepos });
+    })
+  }
+
+  const keyPress = (e) =>{
+    if(e.keyCode === 13){
+      searchJuso();
+    } 
+  }
+
+  useEffect(() => {
+    mapSetting("start",'','');
   }, [])
   
   return (
@@ -46,26 +149,32 @@ const App: React.FC = () => {
       <div>
         <Grid container >
           <Grid item xs={12} md={6}>
-            <div id="jusoSearch" style={{ width:'100%', height: "100%" }}>
+            <div id="jusoSearch" style={{ width:'100%', height: "100%",paddingTop: "10px" }}>
                 <Grid style={{ width:'100%', display: "flex" }}>
                   <TextField
                     // placeholder="Order Reference"
+                    id="searchValue"
                     label="주소 검색"
                     fullWidth={true}
+                    onChange={(evt) => {setJusoTxt({juso : evt.target.value})}}
                     name="reference"
+                    onKeyDown={keyPress}
                     style={styles.searchField}/>
                   <Button
                     variant="contained"
                     style={styles.searchButton}
-                    //onClick={this.handleSearch}
+                    onClick={searchJuso}
                     color="secondary">
                     검색
                   </Button>
                 </Grid>
+                <div>
+                  <ListLoading isLoading={appState.loading} repos={appState.repos} />
+                </div>
             </div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <div id="map" style={{ width: "100%", height: "65vh" }} />
+            <div id="map" style={{ width: "100%", height: "65vh"}} />
           </Grid>
         </Grid>
       </div>
