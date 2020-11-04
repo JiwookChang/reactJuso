@@ -33,8 +33,6 @@ function onClick(query) {
     })
     .then(function (response) {
       let allRepos = Array.from(response.data.documents);
-      console.log(allRepos[0]['x']);
-      console.log(allRepos[0]['y']);
       mapSetting("change", allRepos[0]['x'], allRepos[0]['y']);
     });
 }
