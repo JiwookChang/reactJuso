@@ -121,7 +121,7 @@ const App: React.FC = () => {
   const searchJuso = () =>{
     // const apiUrl = '/juso/findJuso';
     // const apiParams = '?jusoId=1'
-    const apiUrl = '/addrlink/addrLinkApi.do';
+    const apiUrl = 'http://www.juso.go.kr/addrlink/addrLinkApi.do';
     const apiParams = '?confmKey=U01TX0FVVEgyMDIwMTEwNDE2NDAxNTExMDM3MDA=&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
     
     axios.get(apiUrl+apiParams)
