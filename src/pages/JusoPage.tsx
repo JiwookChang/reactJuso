@@ -122,7 +122,7 @@ const App: React.FC = () => {
     // const apiUrl = '/juso/findJuso';
     // const apiParams = '?jusoId=1'
     const apiUrl = '/addrlink/addrLinkApi.do';
-    const apiParams = '?confmKey=devU01TX0FVVEgyMDIwMTAyOTA5NTg0MTExMDM0MzM=&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
+    const apiParams = '?confmKey=U01TX0FVVEgyMDIwMTEwNDE2NDAxNTExMDM3MDA=&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
     
     axios.get(apiUrl+apiParams)
     .then(res => {
