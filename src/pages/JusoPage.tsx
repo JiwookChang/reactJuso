@@ -24,12 +24,10 @@ let map = null;
 let marker = null;
 
 function onClick(query) {
-  
-  var REST_API_KEY = '51093cfa7f4035a413a68262c7862182';
   axios({
       method: 'get',
       url: 'https://dapi.kakao.com//v2/local/search/address.json?query='+query,
-      headers: {'Authorization': 'KakaoAK ' + REST_API_KEY }
+      headers: {'Authorization': 'KakaoAK ' + process.env.REACT_APP_KAKAO_REST_KEY }
     })
     .then(function (response) {
       let allRepos = Array.from(response.data.documents);
@@ -120,7 +118,7 @@ const App: React.FC = () => {
     // const apiUrl = '/juso/findJuso';
     // const apiParams = '?jusoId=1'
     const apiUrl = 'http://www.juso.go.kr/addrlink/addrLinkApi.do';
-    const apiParams = '?confmKey=U01TX0FVVEgyMDIwMTEwNDE2NDAxNTExMDM3MDA=&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
+    const apiParams = '?confmKey='+process.env.REACT_APP_JUSO_KEY+'&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
     
     axios.get(apiUrl+apiParams)
     .then(res => {
