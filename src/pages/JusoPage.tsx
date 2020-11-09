@@ -119,8 +119,8 @@ const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {
 
   axios({
     method: 'post',
-    url: 'http://aa9469ffeb8574124b23b9b29a8cb11a-1176417964.ap-northeast-2.elb.amazonaws.com:8080/api/juso/content/findContent',
-    //url: '/corsApi',
+    //url: 'http://aa9469ffeb8574124b23b9b29a8cb11a-1176417964.ap-northeast-2.elb.amazonaws.com:8080/api/juso/content/findContent',
+    url: '/corsApi',
     headers: {"Access-Control-Allow-Origin": "*" },
     data: {
       roadNmCd: 111103100012,
