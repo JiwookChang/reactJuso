@@ -108,32 +108,32 @@ const mapSetting = (mode, x, y) => {
 const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {  
   console.log("ldongCd: "+ldongCd+"  &stNmCd: "+stNmCd+"  &bldMainNum: "+bldMainNum+"  &bldSubNum: "+bldSubNum+"  &jihaChk: "+jihaChk);
   // const params = "&ldongCd="+ldongCd+"&stNmCd="+stNmCd+"&bldMainNum="+bldMainNum+"&bldSubNum="+bldSubNum+"&jihaChk="+jihaChk;
-  //const params = "?ldongCd=1111010100&stNmCd=111103100012&bldMainNum=94&bldSubNum=0&jihaChk=0";
+  const params = "?ldongCd=1111010100&stNmCd=111103100012&bldMainNum=94&bldSubNum=0&jihaChk=0";
 
-    //axios.get('/corsApi/juso/content/findContent'+params)
-    //.then(res => {
-    //  let allRepos = Array.from(res.data.results.juso);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
-    //  console.log(allRepos);
-    //})  
-
-
-  axios({
-    method: 'post',
-    //url: 'http://aa9469ffeb8574124b23b9b29a8cb11a-1176417964.ap-northeast-2.elb.amazonaws.com:8080/api/juso/content/findContent',
-    url: '/corsApi',
-    headers: {"Access-Control-Allow-Origin": "*" },
-    data: {
-      roadNmCd: 111103100012,
-      jihaChk: 0,
-      bldMainNum: 94,
-      bldSubNum: 0,
-      ldongCd: 1111010100,
-    }
-  }).then(function (response) {
-      let allRepos = Array.from(response.data.contentList);
+  axios.get('/corsApi/juso/content/findContent'+params)
+    .then(res => {
+      let allRepos = Array.from(res.data.results.juso);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
       console.log(allRepos);
-      //console.log("result contentTyp: "+allRepos[0]['& contentMemo']+""+allRepos[0]['contentMemo']);
-   });
+    })  
+
+
+  //axios({
+  //  method: 'post',
+    //url: 'http://aa9469ffeb8574124b23b9b29a8cb11a-1176417964.ap-northeast-2.elb.amazonaws.com:8080/api/juso/content/findContent',
+  //  url: '/corsApi',
+  //  headers: {"Access-Control-Allow-Origin": "*" },
+  //  data: {
+  //    roadNmCd: 111103100012,
+  //    jihaChk: 0,
+  //    bldMainNum: 94,
+  //    bldSubNum: 0,
+  //    ldongCd: 1111010100,
+  //  }
+  //}).then(function (response) {
+  //    let allRepos = Array.from(response.data.contentList);
+  //    console.log(allRepos);
+  //    //console.log("result contentTyp: "+allRepos[0]['& contentMemo']+""+allRepos[0]['contentMemo']);
+  // });
 };
 
 const App: React.FC = () => {
