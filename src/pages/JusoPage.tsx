@@ -33,7 +33,7 @@ function onClick(query, ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) {
       let allRepos = Array.from(response.data.documents);
       mapSetting("change", allRepos[0]['x'], allRepos[0]['y']);
     });
-    getFacilityInfo(ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk)
+    getFacilityInfo(ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk);
 }
 
 function mouseOver(e) {
@@ -101,21 +101,47 @@ const mapSetting = (mode, x, y) => {
         map: map,
     });
     marker.setMap(map);
-    map.setCenter(new window.kakao.maps.LatLng(y, x))
+    map.setCenter(new window.kakao.maps.LatLng(y, x));
+
+    getFacilityInfoByXY(y, x);
   }
 };
 
 const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {  
   console.log("ldongCd: "+ldongCd+"  &stNmCd: "+stNmCd+"  &bldMainNum: "+bldMainNum+"  &bldSubNum: "+bldSubNum+"  &jihaChk: "+jihaChk);
-  // const params = "&ldongCd="+ldongCd+"&stNmCd="+stNmCd+"&bldMainNum="+bldMainNum+"&bldSubNum="+bldSubNum+"&jihaChk="+jihaChk;
-  const params = "?roadNmCd=111103100012&jihaChk=0&bldMainNum=94&bldSubNum=0&ldongCd=1111010100";
+  // const params = "/findJusoContent&ldongCd="+ldongCd+"&roadNmCd="+stNmCd+"&bldMainNum="+bldSubNum+"&bldSubNum="+bldSubNum+"&jihaChk="+jihaChk;
+  const params = "/findJusoContent?roadNmCd=111103100012&jihaChk=0&bldMainNum=94&bldSubNum=0&ldongCd=1111010100";
   
-  axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content/findJusoContent'+params)
+  axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
     .then(res => {
       let allRepos = Array.from(res.data);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
       console.log(allRepos);
     })  
 };
+
+const getFacilityInfoByXY = (x, y) => {  
+  console.log("posX = "+x+"   posY = "+y);
+  
+  const params = "/findPosContent?posX="+x+"&posY="+y;
+  
+  axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
+    .then(res => {
+      let allRepos = Array.from(res.data);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
+      console.log(allRepos);
+
+      
+      for(var i=0;i<allRepos.length; i++){
+        const mark = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(allRepos[i]['posX'], allRepos[i]['posY']),
+          map: map,
+        });
+
+        mark.setMap(map);
+      }
+    })  
+};
+
+
 
 const App: React.FC = () => {
   const ListLoading = jusoList;
