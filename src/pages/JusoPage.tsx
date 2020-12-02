@@ -272,8 +272,8 @@ const App: React.FC = () => {
             </div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <div id="map" style={{ width: "100%", height: "32vh"}} />
-            <div id="roadview" style={{ width: "100%", height: "32vh"}} />
+            <div id="map" style={{ width: "100%", height: "36vh"}} />
+            <div id="roadview" style={{ width: "100%", height: "36vh"}} />
           </Grid>
         </Grid>
       </div>
