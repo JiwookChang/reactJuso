@@ -1,12 +1,12 @@
 import React from "react";
 import Assessment from '@material-ui/icons/Assessment';
-import PermIdentity from '@material-ui/icons/PermIdentity';
+// import PermIdentity from '@material-ui/icons/PermIdentity';
 import SettingsPower from '@material-ui/icons/SettingsPower';
 import VpnKey from '@material-ui/icons/VpnKey';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ChevronRight from '@material-ui/icons/ChevronRight';
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+// import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { cyan, pink, purple } from '@material-ui/core/colors';
 import StoreOutlinedIcon from '@material-ui/icons/StoreOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
@@ -17,9 +17,9 @@ const purple600 = purple['600'];
 const data = {
   menus: [
     { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
-    { text: "고객", icon: <PermIdentity />, link: "/customers" },
-    { text: "청약", icon: <ShoppingCartOutlinedIcon />, link: "/orders" },
-    { text: "상품", icon: <StoreOutlinedIcon />, link: "/products" },
+    // { text: "고객", icon: <PermIdentity />, link: "/customers" },
+    // { text: "청약", icon: <ShoppingCartOutlinedIcon />, link: "/orders" },
+    { text: "국사", icon: <StoreOutlinedIcon />, link: "/products" },
     { text: "주소", icon: <InfoOutlinedIcon />, link: "/juso" }
   ],
   userMenus: [
