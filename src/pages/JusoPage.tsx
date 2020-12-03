@@ -17,26 +17,27 @@ declare global {
     kakao: any;
   }
 }
-// map elements
+// Map elements
 let container = null;
 let options = null;
 let map = null;
 let marker = null;
 let facilityMarkers = [];
 
-// roadView elements
+// RoadView elements
 let rvContainer = null;
 let rv = null;
 let rc = null;
 let rvResetValue = {"panoId":null, "pan":null, "tilt":null,"zoom":null};
 
-
-const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',   // 이미지 주소 
-      imageSize = new window.kakao.maps.Size(35, 38),                                         // 마커이미지의 크기입니다
-      imageOption = {offset: new  window.kakao.maps.Point(27, 69)};                           // 마커이미지의 옵션
+// New marker image
+const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',   // url for the marker image
+      imageSize = new window.kakao.maps.Size(35, 38),                                         // size of marker
+      imageOption = {offset: new  window.kakao.maps.Point(27, 69)};                           // options for marker
 
 const facilityMarkerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
+// Click event when address has been clicked. Gets gio info from Kakao 
 function onClick(query, ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) {
   axios({
       method: 'get',
@@ -50,13 +51,16 @@ function onClick(query, ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) {
     getFacilityInfo(ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk);
 }
 
+// Mouse over event on address list
 function mouseOver(e) {
   e.target.style.background = 'gray';
 }
+// Mouse out event on address list
 function mouseOut(e) {
   e.target.style.background = '#fff';
 }
 
+// Making address list
 const jusoList = (props) => {
   const { repos } = props;
   if (!repos || repos.length === 0) return <p></p>;
@@ -90,22 +94,24 @@ const jusoList = (props) => {
   );
 };
 
+// start : Init Kakao map 
+// change : Change place
 const mapSetting = (mode, x, y) => {  
   if(mode === "start"){
-    container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    options = { //지도를 생성할 때 필요한 기본 옵션
-      center: new window.kakao.maps.LatLng(37.405732, 127.098376), //지도의 중심좌표.
-      level: 4 //지도의 레벨(확대, 축소 정도)
+    container = document.getElementById('map'); // dom reference for map
+    options = { // basic options for the map
+      center: new window.kakao.maps.LatLng(37.405732, 127.098376), // center gio info
+      level: 4 // level of the map
     };
-    map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    map = new window.kakao.maps.Map(container, options); //create map 
 
-    // 마커 생성
+    // create marker
     marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(37.405732, 127.098376),
         map: map
     });
 
-    // 마커 표시
+    // show marker on map
     marker.setMap(map);
 
   }else{
@@ -123,25 +129,30 @@ const mapSetting = (mode, x, y) => {
   }
 };
 
+// Get facility info from aws backend by using road info
 const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {  
   console.log("ldongCd: "+ldongCd+"  &stNmCd: "+stNmCd+"  &bldMainNum: "+bldMainNum+"  &bldSubNum: "+bldSubNum+"  &jihaChk: "+jihaChk);
   // const params = "/findJusoContent&ldongCd="+ldongCd+"&roadNmCd="+stNmCd+"&bldMainNum="+bldSubNum+"&bldSubNum="+bldSubNum+"&jihaChk="+jihaChk;
-  const params = "/findJusoContent?roadNmCd=111103100012&jihaChk=0&bldMainNum=94&bldSubNum=0&ldongCd=1111010100";
+  const params = "/findJusoContentList?categoryId=1&roadNmCd=111103100012&jihaChk=0&bldMainNum=94&bldSubNum=0&ldongCd=1111010100";
   
   axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
     .then(res => {
-      let allRepos = Array.from(res.data);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
+      let allRepos = Array.from(res.data);
       console.log(allRepos);
     })  
 };
 
+// Get near by facility gio info from aws backend by using road info. And show them on kakao map
 const getFacilityInfoByXY = (x, y) => {
   clearMarkers();  
-
-  const params = "/findPosContent?posX="+x+"&posY="+y;
+  const params = "/findPosContentList?categoryId=1&posX="+x+"&posY="+y;
   axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
     .then(res => {
-      let allRepos = Array.from(res.data);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
+      console.log("res >>>");
+      console.log(res);
+      console.log("res.data >>>");
+      console.log(res.data);
+      let allRepos = Array.from(res.data);
       console.log(allRepos);
       
       for(var i=0;i<allRepos.length; i++){
@@ -155,56 +166,45 @@ const getFacilityInfoByXY = (x, y) => {
     })  
 };
 
+// clear markers
 const clearMarkers = () => { 
   if(facilityMarkers.length>0){
     for(var i=0;i<facilityMarkers.length; i++){
       facilityMarkers[i].setMap(null);        // Clear markers on map
     }
-    facilityMarkers = [];                     // Clear markers
   }
 }
 
+// reset markers on map
 const setMarkers = () => { 
   for (var i = 0; i < facilityMarkers.length; i++) {
     facilityMarkers[i].setMap(map);
   }  
 }
 
+// start : Init roadview
+// change : change view with new center gio info
 const roadViewSetting = (mode) => {  
   if(mode === "start"){
-    rvContainer = document.getElementById('roadview'); //지도를 담을 영역의 DOM 레퍼런스
+    rvContainer = document.getElementById('roadview'); // dom reference for roadview
     rv = new window.kakao.maps.Roadview(rvContainer); // 로드뷰 객체 생성
     rc = new window.kakao.maps.RoadviewClient(); // 좌표를 통한 로드뷰의 panoid를 추출하기 위한 로드뷰 help객체 생성
     
     rc.getNearestPanoId(options.center, 50, function(panoId) {
-        rv.setPanoId(panoId, options.center);//좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
+        rv.setPanoId(panoId, options.center); //좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
         rvResetValue.panoId = panoId;
     });
   }else{
     console.log("options.center > "+options.center);
     rc.getNearestPanoId(options.center, 50, function(panoId) {
-      rv.setPanoId(panoId, options.center);//좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
+      rv.setPanoId(panoId, options.center); //좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
       rvResetValue.panoId = panoId;
     });
   }
 
 };
-/*
-const rvInit = () => {  
-  // 로드뷰 마커가 중앙에 오도록 로드뷰의 viewpoint 조정 합니다.
-  const projection = rv.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
-  
-  // 마커의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
-  const viewpoint = projection.viewpointFromCoords(marker.getPosition(), marker.getAltitude());
-  rv.setViewpoint(viewpoint); //로드뷰에 뷰포인트를 설정합니다.
 
-  //각 뷰포인트 값을 초기화를 위해 저장해 놓습니다.
-  rvResetValue.pan = viewpoint.pan;
-  rvResetValue.tilt = viewpoint.tilt;
-  rvResetValue.zoom = viewpoint.zoom;
-};
-*/
-
+// Show the contents on body
 const App: React.FC = () => {
   const ListLoading = jusoList;
   const [appState, setAppState] = useState({
@@ -216,14 +216,12 @@ const App: React.FC = () => {
   });
 
   const searchJuso = () =>{
-    // const apiUrl = '/juso/findJuso';
-    // const apiParams = '?jusoId=1'
     const apiUrl = 'http://www.juso.go.kr/addrlink/addrLinkApi.do';
     const apiParams = '?confmKey='+process.env.REACT_APP_JUSO_KEY+'&currentPage=1&countPerPage=10&resultType=json&keyword='+jusoTxt.juso;
     
     axios.get(apiUrl+apiParams)
     .then(res => {
-      let allRepos = Array.from(res.data.results.juso);  // axios를 통해 온 객체는 HTㅢCollection이다. Javascript Array로 변경해 map을 사용할 수 있다.
+      let allRepos = Array.from(res.data.results.juso);
       setAppState({ loading: false, repos: allRepos });
     })
   }
