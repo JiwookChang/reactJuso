@@ -46,7 +46,7 @@ function onClick(query, ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) {
     })
     .then(function (response) {
       let allRepos = Array.from(response.data.documents);
-      mapSetting("change", allRepos[0]['x'], allRepos[0]['y']);
+      mapSetting("change", allRepos[0]['y'], allRepos[0]['x']);
     });
     getFacilityInfo(ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk);
 }
@@ -97,6 +97,7 @@ const jusoList = (props) => {
 // start : Init Kakao map 
 // change : Change place
 const mapSetting = (mode, x, y) => {  
+  console.log("mapSetting x > "+x+"  y > "+y)
   if(mode === "start"){
     container = document.getElementById('map'); // dom reference for map
     options = { // basic options for the map
@@ -117,15 +118,15 @@ const mapSetting = (mode, x, y) => {
   }else{
     marker.setMap(null);
     marker = new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(y, x),
+        position: new window.kakao.maps.LatLng(x, y),
         map: map,
     });
     marker.setMap(map);
-    map.setCenter(new window.kakao.maps.LatLng(y, x));
-    options.center = new window.kakao.maps.LatLng(y, x);
+    map.setCenter(new window.kakao.maps.LatLng(x, y));
+    options.center = new window.kakao.maps.LatLng(x, y);
     
     roadViewSetting("change");
-    getFacilityInfoByXY(y, x);
+    getFacilityInfoByXY(x, y);
   }
 };
 
@@ -145,19 +146,15 @@ const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {
 // Get near by facility gio info from aws backend by using road info. And show them on kakao map
 const getFacilityInfoByXY = (x, y) => {
   clearMarkers();  
-  const params = "/findPosContentList?categoryId=1&posX="+x+"&posY="+y;
+  const params = "/findPosContentList?categoryId=1&posX="+y+"&posY="+x;
   axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
     .then(res => {
-      console.log("res >>>");
-      console.log(res);
-      console.log("res.data >>>");
-      console.log(res.data);
       let allRepos = Array.from(res.data);
       console.log(allRepos);
       
       for(var i=0;i<allRepos.length; i++){
         const mark = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(allRepos[i]['posX'], allRepos[i]['posY']),
+          position: new window.kakao.maps.LatLng(allRepos[i]['posY'], allRepos[i]['posX']),
           image: facilityMarkerImage
         });
         facilityMarkers.push(mark);
