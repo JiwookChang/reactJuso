@@ -25,7 +25,7 @@ const styles = listPageStyle;
 const defaultProps = {
   model: 'product',
   dataKeys: ['name', 'category.name', 'unitPrice', 'numInStock','actions'],
-  headers: ['Product Name', 'Category Name', 'Price', 'Total In Stock', 'Actions'],
+  headers: ['Tpo Code', 'Tpo Name', 'Tpo Type Nm', 'Mgmt. Tpo Code', 'Actions'],
 };
 
 type DefaultProps = typeof defaultProps;

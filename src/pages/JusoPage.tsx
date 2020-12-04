@@ -136,7 +136,7 @@ const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {
   // const params = "/findJusoContent&ldongCd="+ldongCd+"&roadNmCd="+stNmCd+"&bldMainNum="+bldSubNum+"&bldSubNum="+bldSubNum+"&jihaChk="+jihaChk;
   const params = "/findJusoContentList?categoryId=1&roadNmCd=111103100012&jihaChk=0&bldMainNum=94&bldSubNum=0&ldongCd=1111010100";
   
-  axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
+  axios.get('http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/juso/content/'+params)
     .then(res => {
       let allRepos = Array.from(res.data);
       console.log(allRepos);
@@ -147,7 +147,7 @@ const getFacilityInfo = (ldongCd, stNmCd, bldMainNum, bldSubNum, jihaChk) => {
 const getFacilityInfoByXY = (x, y) => {
   clearMarkers();  
   const params = "/findPosContentList?categoryId=1&posX="+y+"&posY="+x;
-  axios.get('http://a2fb35f700d7c4890a4b9643dfc0a82b-464956859.ap-northeast-2.elb.amazonaws.com:8080/juso/content'+params)
+  axios.get('http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/juso/content/'+params)
     .then(res => {
       let allRepos = Array.from(res.data);
       console.log(allRepos);
