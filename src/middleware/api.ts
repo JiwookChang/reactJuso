@@ -6,6 +6,7 @@ import url from 'url';
 import querystring from 'querystring';
 import { HttpMethod } from "../store/types";
 import { getSeachFilters } from "../utils/app-utils";
+import axios from 'axios';
 
 const ds = Object.assign({}, DB)
 const EXPAND = "_expand"
@@ -86,6 +87,12 @@ export function getData(action: string): Promise<TODO> {
               ds[expandModel].findIndex((d: { id: number }) => d.id === expandId)
               ];
           }
+          console.log("expand >>");
+          console.log(expand);
+          console.log("expandId >>");
+          console.log(expandId);
+          console.log("m[expand] >>");
+          console.log(m[expand]);
           return m;
         });
       }
@@ -100,6 +107,25 @@ export function getData(action: string): Promise<TODO> {
       }
     }
     setTimeout(resolve, 300, { data: result });
+  });
+}
+
+export function getBackEndData(action: string): Promise<TODO> {
+  const apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/findTpoList';
+  return new Promise(function (resolve, _reject) {
+    let result: TODO;
+    
+    axios.get(apiUrl)
+          .then(res => {
+            let allRepos = Array.from(res.data);
+            let i=1;
+            result = allRepos.map((m: { [x: string]: TODO }) => {
+              m["category"] = {"description": "국사정보", "id": i, "name": "Beverages", "picture": null};
+              m["id"]=i++;
+              return m;
+            });
+            setTimeout(resolve, 300, { data: result });
+          })
   });
 }
 
@@ -147,10 +173,11 @@ export function login(action: string, _method: HttpMethod, data: TODO): Promise<
   });
 }
 
-export function callApi(endpoint, method: HttpMethod, data?: TODO, filters?: TODO) {
+export function  callApi(endpoint, method: HttpMethod, data?: TODO, filters?: TODO) {
   switch (method) {
     case HttpMethod.GET:
-      return getData(endpoint);
+      //return getData(endpoint);
+      return getBackEndData(endpoint);
     case HttpMethod.PUT:
       return putData(endpoint, data);
     case HttpMethod.POST:

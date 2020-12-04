@@ -60,7 +60,15 @@ export interface Product extends Entity {
   unitPrice: number;
   category: Category;
   avatar?: string;
+
+  tpoCd: string;
+  tpoNm: string;
+  tpoTypeNm: string;
+  mgmtTpoCd: string;
+  tpoTypeCd: number | string;
 }
+
+
 
 export type ViewModel = Customer | Order | Product | Category  
 
@@ -168,6 +176,12 @@ export class ProductModel implements Product {
     numInStock: number = 0,
     unitPrice: number = 0,
     category = {} as Category,
+
+    tpoCd: string="",
+    tpoNm: string="",
+    tpoTypeNm: string="",
+    mgmtTpoCd: string="",
+    tpoTypeCd: string="",
   ) {
     this.id = 0;
     this.name = name;
@@ -175,6 +189,12 @@ export class ProductModel implements Product {
     this.numInStock = numInStock;
     this.unitPrice = unitPrice;
     this.category = category;
+
+    this.tpoCd = tpoCd;
+    this.tpoNm = tpoNm;
+    this.tpoTypeNm = tpoTypeNm;
+    this.mgmtTpoCd = mgmtTpoCd;
+    this.tpoTypeCd = tpoTypeCd;
   
   }
   id: number;
@@ -183,5 +203,11 @@ export class ProductModel implements Product {
   numInStock: number;
   unitPrice: number;
   category: Category;
+
+  tpoCd: string;
+  tpoNm: string;
+  tpoTypeNm: string;
+  mgmtTpoCd: string;
+  tpoTypeCd: number | string;
 
 }

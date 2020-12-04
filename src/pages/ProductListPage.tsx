@@ -24,7 +24,8 @@ const styles = listPageStyle;
 
 const defaultProps = {
   model: 'product',
-  dataKeys: ['name', 'category.name', 'unitPrice', 'numInStock','actions'],
+  //dataKeys: ['name', 'category.name', 'unitPrice', 'numInStock','actions'],
+  dataKeys: ['tpoCd', 'tpoNm', 'tpoTypeNm', 'mgmtTpoCd','actions'],
   headers: ['Tpo Code', 'Tpo Name', 'Tpo Type Nm', 'Mgmt. Tpo Code', 'Actions'],
 };
 
