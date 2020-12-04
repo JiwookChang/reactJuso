@@ -202,8 +202,6 @@ function dispatchReponse(dispatch, type, response) {
     //------------------------
     case LIST_PRODUCT:
       dispatch(listProduct(response.data));
-      console.log("Log on thunks 205 line");
-      console.log(response.data);
       break;
 
     case GET_PRODUCT:
