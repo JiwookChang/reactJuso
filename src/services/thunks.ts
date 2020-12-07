@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppState } from "../store";
-import { callApi, login } from "../middleware/api";
+import { callApi, callTpoApi, login } from "../middleware/api";
 import {
   listCustomers,
   getCustomer,
@@ -125,6 +125,37 @@ export const thunkApiQCall = (
   dispatchReponse(dispatch, type, response);
 };
 
+export const thunkTpoApiCall = (
+  apiAction?: ApiAction
+): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
+  let response: TODO;
+  const { type, endpoint, method, data, filters } = apiAction;
+  
+  if (!isNewAction(type)) {
+    response = await callTpoApi(endpoint, method, data, filters);
+  } else {
+    response = getNewEntity(type);
+  }
+  
+  dispatchReponse(dispatch, type, response);
+};
+
+export const thunkTpoApiQCall = (
+  qActions: QActions
+): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
+  const response = {};
+  const { type, actions } = qActions;
+  
+
+  for (const key in actions) {
+    const res = await callTpoEndPoint(actions[key]);
+    response[key] = res.data;
+  }
+
+  
+  dispatchReponse(dispatch, type, response);
+};
+
 function getNewEntity(newAction: NewAction) {
   switch (newAction) {
     case NEW_CUSTOMER:
@@ -147,6 +178,17 @@ async function callEndPoint(apiAction: ApiAction) {
   const { type, endpoint, method, data, filters } = apiAction;
   if (!isNewAction(type)) {
     response = await callApi(endpoint, method, data, filters);
+  } else {
+    response = getNewEntity(type);
+  }
+  return response;
+}
+
+async function callTpoEndPoint(apiAction: ApiAction) {
+  let response: TODO;
+  const { type, endpoint, method, data, filters } = apiAction;
+  if (!isNewAction(type)) {
+    response = await callTpoApi(endpoint, method, data, filters);
   } else {
     response = getNewEntity(type);
   }

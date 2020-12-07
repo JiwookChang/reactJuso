@@ -43,7 +43,8 @@ const styles = {
     width: "95%",
   },
   pagination: {
-    width: 350,
+    width: "50%",
+    minWidth: "450px",
     margin: "0 auto",
     paddingTop: 10,
   },

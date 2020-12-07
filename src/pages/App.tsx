@@ -16,12 +16,14 @@ import { User } from "../types";
 import { thunkAuth } from "../services/thunks";
 import { SIGN_IN, HttpMethod, SIGN_OUT } from "../store/types";
 import DashboardPage from "./DashboardPage";
-import CustomerListPage from "./CustomerListPage";
-import CustomerFormPage from "./CustomerFormPage";
-import OrderFormPage from "./OrderFormPage";
-import OrderListPage from "./OrderListPage";
+// import CustomerListPage from "./CustomerListPage";
+// import CustomerFormPage from "./CustomerFormPage";
+// import OrderFormPage from "./OrderFormPage";
+// import OrderListPage from "./OrderListPage";
 import ProductFormPage from "./ProductFormPage";
 import ProductListPage from "./ProductListPage";
+import TpoFormPage from "./TpoFormPage";
+import TpoListPage from "./TpoListPage";
 import JusoPage from "./JusoPage";
 import ChangePasswordPage from "./ChangePasswordPage";
 
@@ -182,15 +184,18 @@ class App extends React.Component<AppProps, AppState> {
               />
               <div style={appStlyes.content}>
                 {showDashboard && <DashboardPage />}
-                <Route exact path={`/customers`} component={CustomerListPage} />
+                {/* <Route exact path={`/customers`} component={CustomerListPage} />
                 <Route path={`/customer/:id`} component={CustomerFormPage} />
                 <Route path={`/newcustomer/`} component={CustomerFormPage} />
                 <Route exact path={`/orders`} component={OrderListPage} />
                 <Route path={`/order/:id`} component={OrderFormPage} />
-                <Route path={`/neworder/`} component={OrderFormPage} />
+                <Route path={`/neworder/`} component={OrderFormPage} /> */}
                 <Route exact path={`/products`} component={ProductListPage} />
                 <Route path={`/product/:id`} component={ProductFormPage} />
                 <Route path={`/newproduct`} component={ProductFormPage} />
+                <Route exact path={`/tpo`} component={TpoListPage} />
+                <Route path={`/tpo/:id`} component={TpoFormPage} />
+                <Route path={`/newproduct`} component={TpoFormPage} />
                 <Route path={`/juso`} component={JusoPage} />
                 <Route path="/changepass" component={ChangePasswordPage} />
                 {/* <Route path="/404" component={NotFoundPage} />

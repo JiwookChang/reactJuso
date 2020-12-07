@@ -9,7 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
-import { thunkApiCall, thunkApiQCall } from '../services/thunks';
+import { thunkTpoApiCall, thunkTpoApiQCall } from '../services/thunks';
 import { NEW_PRODUCT, LIST_PRODUCT, ApiAction, QActions, DELETE_PRODUCT } from '../store/types';
 import { Product, SearchFilter } from '../types';
 import Alert from '../components/Alert';
@@ -24,7 +24,8 @@ const styles = listPageStyle;
 
 const defaultProps = {
   model: 'product',
-  dataKeys: ['name', 'category.name', 'unitPrice', 'numInStock','actions'],
+  //dataKeys: ['name', 'category.name', 'unitPrice', 'numInStock','actions'],
+  dataKeys: ['tpoCd', 'tpoNm', 'tpoTypeNm', 'mgmtTpoCd','actions'],
   headers: ['Tpo Code', 'Tpo Name', 'Tpo Type Nm', 'Mgmt. Tpo Code', 'Actions'],
 };
 
@@ -34,9 +35,9 @@ type ProductListProps = {
   pageCount: number;
   isFetching: boolean;
   productList: Product[];
-  searchProduct: typeof thunkApiCall;
-  deleteProduct: typeof thunkApiCall;
-  newProduct: typeof thunkApiQCall;
+  searchProduct: typeof thunkTpoApiCall;
+  deleteProduct: typeof thunkTpoApiCall;
+  newProduct: typeof thunkTpoApiQCall;
   fetchingProduct: () => {};
   deleteSuccess: boolean;
   errorMessage: string;
@@ -196,7 +197,7 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
     const { isFetching, page, totalPages, items } = this.state;
 
     return (
-      <PageBase title={'Products (' + productList.length + ')'} navigation="React Juso / Product">
+      <PageBase title={'국사 (' + productList.length + ')'} navigation="React Juso / 국사">
         {isFetching ? (
           <div>
             <SkeletonList />
@@ -234,8 +235,8 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
                 </Grid>
                 <Grid item xs={12} style={styles.searchField}>
                   <TextField
-                    placeholder="Product Name"
-                    label="Product Name"
+                    placeholder="Tpo Name"
+                    label="Tpo Name"
                     name="name"
                     fullWidth={true}
                     value={this.state.search.contain.name}
@@ -273,11 +274,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    searchProduct: action => dispatch(thunkApiCall(action)),
-    getAllProducts: action => dispatch(thunkApiCall(action)),
-    deleteProduct: action => dispatch(thunkApiCall(action)),
+    searchProduct: action => dispatch(thunkTpoApiCall(action)),
+    getAllProducts: action => dispatch(thunkTpoApiCall(action)),
+    deleteProduct: action => dispatch(thunkTpoApiCall(action)),
     fetchingProduct: () => dispatch(fetchingProduct()),
-    newProduct: action => dispatch(thunkApiQCall(action)),
+    newProduct: action => dispatch(thunkTpoApiQCall(action)),
   };
 }
 

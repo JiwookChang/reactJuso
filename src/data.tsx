@@ -18,8 +18,8 @@ const data = {
   menus: [
     { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
     // { text: "고객", icon: <PermIdentity />, link: "/customers" },
-    // { text: "청약", icon: <ShoppingCartOutlinedIcon />, link: "/orders" },
-    { text: "국사", icon: <StoreOutlinedIcon />, link: "/products" },
+    { text: "Product", icon: <StoreOutlinedIcon />, link: "/products" },
+    { text: "국사", icon: <StoreOutlinedIcon />, link: "/tpo" },
     { text: "주소", icon: <InfoOutlinedIcon />, link: "/juso" }
   ],
   userMenus: [

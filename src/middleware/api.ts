@@ -87,16 +87,10 @@ export function getData(action: string): Promise<TODO> {
               ds[expandModel].findIndex((d: { id: number }) => d.id === expandId)
               ];
           }
-          console.log("expand >>");
-          console.log(expand);
-          console.log("expandId >>");
-          console.log(expandId);
-          console.log("m[expand] >>");
-          console.log(m[expand]);
           return m;
         });
       }
-
+      
       if (filters !== null && filters !== undefined
         && Object.keys(filters).length > 0) {
         result = result.filter(
@@ -111,7 +105,16 @@ export function getData(action: string): Promise<TODO> {
 }
 
 export function getBackEndData(action: string): Promise<TODO> {
-  const apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/findTpoList';
+  const { model, id, exp , filters} = parseRequest(action)
+  let params = querystring.parse(action);
+  let param = "";
+  if (params["name_like"]){
+    param = ""+params["name_like"];
+    param = param.trim();
+  }
+  
+  
+  const apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/findTpoListByTpoNm?tpoNm='+  param;
   return new Promise(function (resolve, _reject) {
     let result: TODO;
     
@@ -120,13 +123,14 @@ export function getBackEndData(action: string): Promise<TODO> {
             let allRepos = Array.from(res.data);
             let i=1;
             result = allRepos.map((m: { [x: string]: TODO }) => {
-              m["category"] = {"description": "국사정보", "id": i, "name": "Beverages", "picture": null};
+              m["category"] = {"description": "국사정보", "id": i, "name": m["tpoTypeNm"], "picture": null};
               m["id"]=i++;
               return m;
             });
+
             setTimeout(resolve, 300, { data: result });
           })
-  });
+  }); 
 }
 
 export function postData(action: string, data: Entity): Promise<TODO> {
@@ -176,7 +180,23 @@ export function login(action: string, _method: HttpMethod, data: TODO): Promise<
 export function  callApi(endpoint, method: HttpMethod, data?: TODO, filters?: TODO) {
   switch (method) {
     case HttpMethod.GET:
-      //return getData(endpoint);
+      return getData(endpoint);
+      // return getBackEndData(endpoint);
+    case HttpMethod.PUT:
+      return putData(endpoint, data);
+    case HttpMethod.POST:
+      return postData(endpoint, data)
+    case HttpMethod.DELETE:
+      return deleteData(endpoint)
+    default:
+      return null;
+
+  }
+}
+
+export function  callTpoApi(endpoint, method: HttpMethod, data?: TODO, filters?: TODO) {
+  switch (method) {
+    case HttpMethod.GET:
       return getBackEndData(endpoint);
     case HttpMethod.PUT:
       return putData(endpoint, data);
