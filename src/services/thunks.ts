@@ -119,7 +119,6 @@ export const thunkApiCall = (
 ): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   let response: TODO;
   const { type, endpoint, method, data, filters } = apiAction;
-  console.log("***************** thunkApiCall For ***************** type = "+type);
   if (!isNewAction(type)) {
     response = await callApi(endpoint, method, data, filters);
   } else {
@@ -137,7 +136,6 @@ export const thunkApiQCall = (
   
 
   for (const key in actions) {
-    console.log("***************** thunkApi Q Call For ***************** key = "+key);
     const res = await callEndPoint(actions[key]);
     response[key] = res.data;
   }
@@ -151,7 +149,6 @@ export const thunkTpoApiCall = (
 ): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   let response: TODO;
   const { type, endpoint, method, data, filters } = apiAction;
-  console.log("***************** thunkTpoApiCall For ***************** type = "+type);
   if (!isNewAction(type)) {
     response = await callTpoApi(endpoint, method, data, filters);
   } else {
@@ -167,9 +164,7 @@ export const thunkTpoApiQCall = (
   const response = {};
   const { type, actions } = qActions;
   
-  console.log("***************** thunkTpoApi Q Call *****************");
   for (const key in actions) {
-    console.log("***************** thunkTpoApi Q Call For ***************** key = "+key);
     const res = await callTpoEndPoint(actions[key]);
     response[key] = res.data;
   }
@@ -224,7 +219,6 @@ async function callTpoEndPoint(apiAction: ApiAction) {
 const isNewAction = (x: any): x is NewAction => x.toString().startsWith("NEW_");
 
 function dispatchReponse(dispatch, type, response) {
-  console.log("***************** dispatchReponse *****************");
   switch (type) {
     case LIST_CUSTOMER:
       dispatch(listCustomers(response.data));

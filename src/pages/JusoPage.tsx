@@ -192,7 +192,6 @@ const roadViewSetting = (mode) => {
         rvResetValue.panoId = panoId;
     });
   }else{
-    console.log("options.center > "+options.center);
     rc.getNearestPanoId(options.center, 50, function(panoId) {
       rv.setPanoId(panoId, options.center); //좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
       rvResetValue.panoId = panoId;

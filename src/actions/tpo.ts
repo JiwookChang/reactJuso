@@ -23,7 +23,6 @@ export function listCategory(result?: TODO) {
 }
 
 export function listTpo(result?: TODO) {
-  console.log("***************** listTpo *****************");
   return {
     type: LIST_TPO,
     payload: result,

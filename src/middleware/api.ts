@@ -65,15 +65,13 @@ function getSubmitForm(data: Entity){
 
   // When tpoTypeCd exists then it's for put work. 
   if(data["tpoTypeCd"]){
-    console.log(">>>>>>>>>>>>>>>>> put <<<<<<<<<<<<<<<<<<<<");
     submitForm["tpoId"] = data["tpoId"];
     submitForm["useYn"] = data["useYn"];
     submitForm["tpoCd"] = data["tpoCd"];
     submitForm["tpoTypeCd"] = data["tpoTypeCd"];
 
   // When tpoTypeCd doesn't exists It's for post work.
-  }else{      
-    console.log(">>>>>>>>>>>>>>>>> post <<<<<<<<<<<<<<<<<<<<");
+  }else{
     let tpoTypeCd = ds["tpoCategories"][ds["tpoCategories"].findIndex((d: { name: string }) => d.name === data["tpoTypeNm"])]; 
     submitForm["tpoTypeCd"] = changeTpoTypeCd(tpoTypeCd["id"]);
     submitForm["useYn"] = "Y";
@@ -241,7 +239,6 @@ export function getBackEndData(action: string): Promise<TODO> {
   }); 
 }
 export function postBackEndData(action: string, data: Entity): Promise<TODO> {
-  console.log("********** postBackEndData : action >>>>" + action);
   console.log("********** postBackEndData : data >>>>");
   console.log(data);
   let submitForm = getSubmitForm(data);
@@ -261,7 +258,6 @@ export function postBackEndData(action: string, data: Entity): Promise<TODO> {
 }
 
 export function putBackEndData(action: string, data: Entity): Promise<TODO> {
-  console.log("********** putBackEndData : action >>>>" + action);
   console.log("********** putBackEndData : data >>>>");
   console.log(data);
   console.log("********** putBackEndData : id >>>>"+ data["id"]);
@@ -280,7 +276,6 @@ export function putBackEndData(action: string, data: Entity): Promise<TODO> {
 
 export function deleteBackEndData(action: string): Promise<TODO> {
   const { id } = parseRequest(action);
-  console.log("********** deleteBackEndData : action >>>>" + action);
   console.log("********** deleteBackEndData : id >>>>"+ id);
   return new Promise(function (resolve, _reject) {
     let apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/deleteTpo/'+id;
