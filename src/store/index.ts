@@ -6,12 +6,14 @@ import { customerReducer } from "../reducers/customer";
 import { authReducer } from "../reducers/auth";
 import { orderReducer } from "../reducers/order";
 import { productReducer } from "../reducers/product";
+import { tpoReducer } from "../reducers/tpo";
 
 const rootReducer = combineReducers({
   customer: customerReducer,
   auth: authReducer,
   order: orderReducer,
-  product: productReducer
+  product: productReducer,
+  tpo: tpoReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

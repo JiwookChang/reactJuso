@@ -3,6 +3,7 @@ import {
   User,
   Order,
   Product,
+  Tpo,
   Category,
 } from "../types";
 
@@ -293,7 +294,96 @@ export type ProductActionTypes =
   | DeleteProductAction
   | FetchingProductAction
 
+  export const LIST_TPO = "LIST_TPO";
+  export const GET_TPO = "GET_TPO";
+  export const NEW_TPO = "NEW_TPO";
+  export const UPDATE_TPO = "UPDATE_TPO";
+  export const CREATE_TPO = "CREATE_TPO";
+  export const DELETE_TPO = "DELETE_TPO";
+  export const EDIT_TPO = "EDIT_TPO";
+  export const FETCHING_TPO = "FETCHING_TPO"
+  
+  export interface TpoState {
+    isFetching: boolean;
+    tpo: Tpo;
+    tpoList: Tpo[];
+    categoryList: Category[];
+    error?: null;
+    deleted?: boolean;
+    updated?: boolean;
+  }
+  
+  interface GetTpoAction {
+    type: typeof GET_TPO;
+    payload: Tpo;
+    error?: string;
+  }
+  
+  interface ListTpoAction {
+    type: typeof LIST_TPO;
+    payload: Tpo[];
+  }
+  
+  interface NewTpoAction {
+    type: typeof NEW_TPO;
+    payload: { tpo: Tpo; categoryList: Category[] };
+    error?: string;
+  }
+  
+  interface UpdateTpoAction {
+    type: typeof UPDATE_TPO;
+    payload: Tpo;
+    error?: string;
+  }
+  
+  interface CreateTpoAction {
+    type: typeof CREATE_TPO;
+    payload: Tpo;
+    error?: string;
+  }
+  
+  interface DeleteTpoAction {
+    type: typeof DELETE_TPO;
+    payload: number;
+    error?: string;
+  }
+  
+  interface EditTpoAction {
+    type: typeof EDIT_TPO;
+    payload: { tpo: Tpo; categoryList: Category[] };
+    error?: string;
+  }
+  
+  interface FetchingTpoAction {
+    type: typeof FETCHING_TPO;
+    payload: null;
+    error?: string;
+  }
+  
+  export type TpoActions =
+    | typeof EDIT_TPO
+    | typeof LIST_CATEGORY
+    | typeof LIST_TPO
+    | typeof GET_TPO
+    | typeof NEW_TPO
+    | typeof UPDATE_TPO
+    | typeof CREATE_TPO
+    | typeof DELETE_TPO
+    | typeof FETCHING_TPO
+  
+  export type TpoActionTypes =
+    | EditTpoAction
+    | ListCategoryAction
+    | NewTpoAction
+    | GetTpoAction
+    | CreateTpoAction
+    | ListTpoAction
+    | UpdateTpoAction
+    | DeleteTpoAction
+    | FetchingTpoAction
+
 export type NewAction =
+  | typeof NEW_TPO
   | typeof NEW_PRODUCT
   | typeof NEW_CUSTOMER
   | typeof NEW_ORDER

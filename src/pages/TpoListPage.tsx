@@ -4,14 +4,14 @@ import ContentAdd from '@material-ui/icons/Add';
 import Search from '@material-ui/icons/Search';
 import PageBase from '../components/PageBase';
 import { connect } from 'react-redux';
-import { getAction, fetchingProduct } from '../actions/product';
+import { getAction, fetchingTpo } from '../actions/tpo';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 import { thunkTpoApiCall, thunkTpoApiQCall } from '../services/thunks';
-import { NEW_PRODUCT, LIST_PRODUCT, ApiAction, QActions, DELETE_PRODUCT } from '../store/types';
-import { Product, SearchFilter } from '../types';
+import { NEW_TPO, LIST_TPO, ApiAction, QActions, DELETE_TPO } from '../store/types';
+import { Tpo, SearchFilter } from '../types';
 import Alert from '../components/Alert';
 import DataTable from '../components/DataTable';
 import SkeletonList from '../components/SkeletonList';
@@ -23,7 +23,7 @@ import { clearSearchFilters, buildSearchFilters, buildJsonServerQuery } from '..
 const styles = listPageStyle;
 
 const defaultProps = {
-  model: 'product',
+  model: 'tpo',
   //dataKeys: ['name', 'category.name', 'unitPrice', 'numInStock','actions'],
   dataKeys: ['tpoCd', 'tpoNm', 'tpoTypeNm', 'mgmtTpoCd','actions'],
   headers: ['Tpo Code', 'Tpo Name', 'Tpo Type Nm', 'Mgmt. Tpo Code', 'Actions'],
@@ -31,30 +31,30 @@ const defaultProps = {
 
 type DefaultProps = typeof defaultProps;
 
-type ProductListProps = {
+type TpoListProps = {
   pageCount: number;
   isFetching: boolean;
-  productList: Product[];
-  searchProduct: typeof thunkTpoApiCall;
-  deleteProduct: typeof thunkTpoApiCall;
-  newProduct: typeof thunkTpoApiQCall;
-  fetchingProduct: () => {};
+  tpoList: Tpo[];
+  searchTpo: typeof thunkTpoApiCall;
+  deleteTpo: typeof thunkTpoApiCall;
+  newTpo: typeof thunkTpoApiQCall;
+  fetchingTpo: () => {};
   deleteSuccess: boolean;
   errorMessage: string;
   deleted: boolean;
 } & DefaultProps;
 
-interface ProductListState {
+interface TpoListState {
   open: boolean;
   isFetching: boolean;
   searchOpen: boolean;
   snackbarOpen: boolean;
   autoHideDuration: number;
   page: number;
-  items: Product[];
-  productList: Product[];
+  items: Tpo[];
+  tpoList: Tpo[];
   totalPages: number;
-  productId: number;
+  tpoId: number;
   search: {
     contain:{
       name: string;
@@ -62,7 +62,7 @@ interface ProductListState {
   };
 }
 
-class ProductListPage extends React.Component<ProductListProps, ProductListState> {
+class TpoListPage extends React.Component<TpoListProps, TpoListState> {
   constructor(props) {
     super(props);
     this.handleToggle = this.handleToggle.bind(this);
@@ -73,12 +73,12 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
     this.handleSearchFilter = this.handleSearchFilter.bind(this);
     this.clearSearchFilter = this.clearSearchFilter.bind(this);
     this.openDialog = this.openDialog.bind(this);
-    this.handleNewProduct = this.handleNewProduct.bind(this);
+    this.handleNewTpo = this.handleNewTpo.bind(this);
   }
 
   static defaultProps = defaultProps;
 
-  state: ProductListState = {
+  state: TpoListState = {
     isFetching: true,
     open: false,
     searchOpen: false,
@@ -87,8 +87,8 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
     page: 1,
     items: [],
     totalPages: 1,
-    productId: null,
-    productList: [],
+    tpoId: null,
+    tpoList: [],
     search: {
      contain:{
       name: '',
@@ -103,11 +103,11 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
 
   componentDidUpdate(prevProps) {
     // reset page if items array has changed
-    if (this.props.productList !== prevProps.productList) {
-      this.setState({ productList: this.props.productList });
+    if (this.props.tpoList !== prevProps.tpoList) {
+      this.setState({ tpoList: this.props.tpoList });
       const page = 1;
-      const totalPages = Math.ceil(this.props.productList.length / 10);
-      const items = this.props.productList.slice(0, 10);
+      const totalPages = Math.ceil(this.props.tpoList.length / 10);
+      const items = this.props.tpoList.slice(0, 10);
       const isFetching = this.props.isFetching;
       this.setState({ page, totalPages, items, isFetching });
     }
@@ -122,13 +122,13 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
   onPageChange(_event: React.ChangeEvent<unknown>, page: number) {
     const startIndex = (page - 1) * 10;
     const endIndex = startIndex + 10;
-    const items = this.props.productList.slice(startIndex, endIndex);
+    const items = this.props.tpoList.slice(startIndex, endIndex);
     this.setState({ page, items });
   }
 
   openDialog(_event: React.ChangeEvent<unknown>, value: number) {
     if (value != null && value > 0) {
-         this.setState({ open: true , productId: value });
+         this.setState({ open: true , tpoId: value });
     }
   }
 
@@ -137,15 +137,15 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
   }
 
   handleSearch() {
-    // const action = getAction(LIST_PRODUCT, null, null, '') as ApiAction;
-    // this.props.searchProduct(action); //this.state.search);
+    // const action = getAction(LIST_TPO, null, null, '') as ApiAction;
+    // this.props.searchTpo(action); //this.state.search);
 
 
     const filters = buildSearchFilters(this.state.search as SearchFilter);
     const query = buildJsonServerQuery(filters);
     // const action = getAction(LIST_CUSTOMER, null, null, query);
-    const action = getAction(LIST_PRODUCT, null, null, query) as ApiAction;
-    this.props.searchProduct(action); //this.state.search);
+    const action = getAction(LIST_TPO, null, null, query) as ApiAction;
+    this.props.searchTpo(action); //this.state.search);
     this.setState({ searchOpen: false, isFetching: true });
 
 
@@ -154,10 +154,10 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
   closeDialog(isConfirmed) {
     this.setState({ open: false });
 
-    if (isConfirmed && this.state.productId) {
-      const action = getAction(DELETE_PRODUCT, this.state.productId, null, '')as ApiAction
-      this.props.deleteProduct(action);
-        this.setState({ productId: null });
+    if (isConfirmed && this.state.tpoId) {
+      const action = getAction(DELETE_TPO, this.state.tpoId, null, '')as ApiAction
+      this.props.deleteTpo(action);
+        this.setState({ tpoId: null });
     }
   }
 
@@ -167,13 +167,13 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
     });
   }
 
-  handleNewProduct() {
-    this.props.fetchingProduct();
+  handleNewTpo() {
+    this.props.fetchingTpo();
 
-    const action = getAction(NEW_PRODUCT) as QActions;
-    this.props.newProduct(action);
+    const action = getAction(NEW_TPO) as QActions;
+    this.props.newTpo(action);
     // @ts-ignore
-    this.props.history.push('/newproduct');
+    this.props.history.push('/newtpo');
   }
 
   handleSearchFilter(event) {
@@ -193,18 +193,18 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
   }
 
   render() {
-    const { productList, headers, dataKeys, model } = this.props;
+    const { tpoList, headers, dataKeys, model } = this.props;
     const { isFetching, page, totalPages, items } = this.state;
 
     return (
-      <PageBase title={'국사 (' + productList.length + ')'} navigation="React Juso / 국사">
+      <PageBase title={'국사 (' + tpoList.length + ')'} navigation="React Juso / 국사">
         {isFetching ? (
           <div>
             <SkeletonList />
           </div>
         ) : (
           <div>
-            <Fab size="small" color="secondary" style={styles.fab} onClick={this.handleNewProduct}>
+            <Fab size="small" color="secondary" style={styles.fab} onClick={this.handleNewTpo}>
               <ContentAdd />
             </Fab>
             <Fab size="small" style={styles.fabSearch} onClick={this.handleToggle}>
@@ -261,10 +261,10 @@ class ProductListPage extends React.Component<ProductListProps, ProductListState
 }
 
 function mapStateToProps(state) {
-  const { productList,  isFetching,  errorMessage, user, deleted } = state.product;
+  const { tpoList,  isFetching,  errorMessage, user, deleted } = state.tpo;
 
   return {
-    productList,
+    tpoList,
     isFetching,
     errorMessage,
   deleted,
@@ -274,12 +274,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    searchProduct: action => dispatch(thunkTpoApiCall(action)),
-    getAllProducts: action => dispatch(thunkTpoApiCall(action)),
-    deleteProduct: action => dispatch(thunkTpoApiCall(action)),
-    fetchingProduct: () => dispatch(fetchingProduct()),
-    newProduct: action => dispatch(thunkTpoApiQCall(action)),
+    searchTpo: action => dispatch(thunkTpoApiCall(action)),
+    getAllTpos: action => dispatch(thunkTpoApiCall(action)),
+    deleteTpo: action => dispatch(thunkTpoApiCall(action)),
+    fetchingTpo: () => dispatch(fetchingTpo()),
+    newTpo: action => dispatch(thunkTpoApiQCall(action)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TpoListPage);

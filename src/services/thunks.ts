@@ -39,6 +39,15 @@ import {
   QActions,
   EDIT_PRODUCT,
   EDIT_ORDER,
+
+  LIST_TPO,
+  GET_TPO,
+  DELETE_TPO,
+  UPDATE_TPO,
+  NEW_TPO,
+  CREATE_TPO,
+  EDIT_TPO,
+  // NewTpoAction,
 } from "../store/types";
 import {
   Customer,
@@ -46,6 +55,8 @@ import {
   OrderModel,
   Product,
   ProductModel,
+  Tpo,
+  TpoModel,
   Order,
 } from "../types";
 import {
@@ -67,6 +78,15 @@ import {
   listCategory,
   editProduct,
 } from "../actions/product";
+import {
+  listTpo,
+  newTpo,
+  getTpo,
+  createTpo,
+  updateTpo,
+  deleteTpo,
+  editTpo,
+} from "../actions/tpo";
 
 export const thunkAuth = (
   apiAction?: ApiAction
@@ -99,7 +119,7 @@ export const thunkApiCall = (
 ): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   let response: TODO;
   const { type, endpoint, method, data, filters } = apiAction;
-  
+  console.log("***************** thunkApiCall For ***************** type = "+type);
   if (!isNewAction(type)) {
     response = await callApi(endpoint, method, data, filters);
   } else {
@@ -117,6 +137,7 @@ export const thunkApiQCall = (
   
 
   for (const key in actions) {
+    console.log("***************** thunkApi Q Call For ***************** key = "+key);
     const res = await callEndPoint(actions[key]);
     response[key] = res.data;
   }
@@ -130,7 +151,7 @@ export const thunkTpoApiCall = (
 ): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   let response: TODO;
   const { type, endpoint, method, data, filters } = apiAction;
-  
+  console.log("***************** thunkTpoApiCall For ***************** type = "+type);
   if (!isNewAction(type)) {
     response = await callTpoApi(endpoint, method, data, filters);
   } else {
@@ -146,8 +167,9 @@ export const thunkTpoApiQCall = (
   const response = {};
   const { type, actions } = qActions;
   
-
+  console.log("***************** thunkTpoApi Q Call *****************");
   for (const key in actions) {
+    console.log("***************** thunkTpoApi Q Call For ***************** key = "+key);
     const res = await callTpoEndPoint(actions[key]);
     response[key] = res.data;
   }
@@ -170,6 +192,10 @@ function getNewEntity(newAction: NewAction) {
       return {
         data: new ProductModel() as Product,
       };
+    case NEW_TPO:
+    return {
+      data: new TpoModel() as Tpo,
+    };
   }
 }
 
@@ -198,7 +224,7 @@ async function callTpoEndPoint(apiAction: ApiAction) {
 const isNewAction = (x: any): x is NewAction => x.toString().startsWith("NEW_");
 
 function dispatchReponse(dispatch, type, response) {
-  
+  console.log("***************** dispatchReponse *****************");
   switch (type) {
     case LIST_CUSTOMER:
       dispatch(listCustomers(response.data));
@@ -215,7 +241,6 @@ function dispatchReponse(dispatch, type, response) {
     case UPDATE_CUSTOMER:
       dispatch(updateCustomer(response.data));
       break;
-
     case DELETE_CUSTOMER:
       dispatch(deleteCustomer(response.data));
       break;
@@ -245,7 +270,6 @@ function dispatchReponse(dispatch, type, response) {
     case LIST_PRODUCT:
       dispatch(listProduct(response.data));
       break;
-
     case GET_PRODUCT:
       dispatch(getProduct(response.data));
       break;
@@ -261,9 +285,30 @@ function dispatchReponse(dispatch, type, response) {
     case UPDATE_PRODUCT:
       dispatch(updateProduct(response.data));
       break;
-
     case DELETE_PRODUCT:
       dispatch(deleteProduct(response.data));
+      break;
+    //------------------------
+    case LIST_TPO:
+      dispatch(listTpo(response.data));
+      break;
+    case GET_TPO:
+      dispatch(getTpo(response.data));
+      break;
+    case NEW_TPO:
+      dispatch(newTpo(response));
+      break;
+    case EDIT_TPO:
+      dispatch(editTpo(response));
+      break;
+    case CREATE_TPO:
+      dispatch(createTpo(response.data));
+      break;
+    case UPDATE_TPO:
+      dispatch(updateTpo(response.data));
+      break;
+    case DELETE_TPO:
+      dispatch(deleteTpo(response.data));
       break;
 
     case LIST_CATEGORY:

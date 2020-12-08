@@ -195,7 +195,7 @@ class App extends React.Component<AppProps, AppState> {
                 <Route path={`/newproduct`} component={ProductFormPage} />
                 <Route exact path={`/tpo`} component={TpoListPage} />
                 <Route path={`/tpo/:id`} component={TpoFormPage} />
-                <Route path={`/newproduct`} component={TpoFormPage} />
+                <Route path={`/newtpo`} component={TpoFormPage} />
                 <Route path={`/juso`} component={JusoPage} />
                 <Route path="/changepass" component={ChangePasswordPage} />
                 {/* <Route path="/404" component={NotFoundPage} />

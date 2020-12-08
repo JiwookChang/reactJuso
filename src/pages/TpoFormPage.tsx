@@ -7,20 +7,20 @@ import PageBase from "../components/PageBase";
 import { connect } from "react-redux";
 import Card from "@material-ui/core/Card";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { getAction } from "../actions/product";
+import { getAction } from "../actions/tpo";
 
 import { Formik, Form, Field } from "formik";
 import { TextField } from "formik-material-ui";
 
 import { thunkTpoApiCall, thunkTpoApiQCall } from "../services/thunks";
-import { Product,  Category } from "../types";
+import { Tpo,  Category } from "../types";
 import { LinearProgress, Grid, MenuItem } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import {
   ApiAction,
-  UPDATE_PRODUCT,
-  CREATE_PRODUCT,
-  EDIT_PRODUCT,
+  UPDATE_TPO,
+  CREATE_TPO,
+  EDIT_TPO,
   QActions,
 } from "../store/types";
 import Alert from "@material-ui/lab/Alert";
@@ -29,11 +29,11 @@ import { formPageStyles } from "../styles";
 
 const styles = formPageStyles;
 
-interface ProductFormProps {
+interface TpoFormProps {
   match: match;
-  product: Product;
-  getProduct: typeof thunkTpoApiQCall;
-  saveProduct: typeof thunkTpoApiCall;
+  tpo: Tpo;
+  getTpo: typeof thunkTpoApiQCall;
+  saveTpo: typeof thunkTpoApiCall;
   categoryList: Category[];
   errorMessage?: string;
   isFetching: boolean;
@@ -41,15 +41,15 @@ interface ProductFormProps {
   updated: boolean;
 }
 
-interface ProductFormState {
-  product: Product;
+interface TpoFormState {
+  tpo: Tpo;
   snackbarOpen: boolean;
   autoHideDuration: number;
 }
 
-class ProductFormPage extends React.Component<
-  ProductFormProps,
-  ProductFormState
+class TpoFormPage extends React.Component<
+  TpoFormProps,
+  TpoFormState
 > {
   constructor(props) {
     super(props);
@@ -57,18 +57,18 @@ class ProductFormPage extends React.Component<
   }
 
   state = {
-    product: {} as Product,
+    tpo: {} as Tpo,
     snackbarOpen: false,
     autoHideDuration: 2000,
   };
 
   componentDidMount() {
     // @ts-ignore
-    const productId = this.props.match.params?.id;
+    const tpoId = this.props.match.params?.id;
     let action: QActions;
-    if (productId) {
-      action = getAction(EDIT_PRODUCT, productId) as QActions;
-      this.props.getProduct(action);
+    if (tpoId) {
+      action = getAction(EDIT_TPO, tpoId) as QActions;
+      this.props.getTpo(action);
     }
   }
   componentDidUpdate(prevProps) {
@@ -87,21 +87,21 @@ class ProductFormPage extends React.Component<
   }
 
   onSave(values: TODO) {
-    const product = { ...this.state.product, ...values };
+    const tpo = { ...this.state.tpo, ...values };
     let action: ApiAction; 
-    if (product.id > 0) {
-      action = getAction(UPDATE_PRODUCT, null, product) as ApiAction;
+    if (tpo.id > 0) {
+      action = getAction(UPDATE_TPO, null, tpo) as ApiAction;
     } else {
-      action = getAction(CREATE_PRODUCT, null, product) as ApiAction;
+      action = getAction(CREATE_TPO, null, tpo) as ApiAction;
     }
-    this.props.saveProduct(action);
+    this.props.saveTpo(action);
   }
 
   render() {
-    const { categoryList, product, isFetching } = this.props;
+    const { categoryList, tpo, isFetching } = this.props;
 
     return (
-      <PageBase title="Product" navigation="Application / Product ">
+      <PageBase title="Tpo" navigation="Application / Tpo ">
         {isFetching ? (
           <div>
             <SkeletonForm />
@@ -109,12 +109,12 @@ class ProductFormPage extends React.Component<
         ) : (
           <Formik
             initialValues={{
-              ...product,
+              ...tpo,
             }}
             validate={(values) => {
-              const errors: Partial<Product> = {};
-              if (!values.name) {
-                errors.name = "Required";
+              const errors: Partial<Tpo> = {};
+              if (!values.tpoNm) {
+                errors.tpoNm = "Required";
               }
               if (!values.categoryId) {
                 errors.categoryId = "Required";
@@ -157,9 +157,9 @@ class ProductFormPage extends React.Component<
                     <Field
                       variant="outlined"
                       component={TextField}
-                      placeholder="Product"
-                      label="Product"
-                      name="name"
+                      placeholder="Tpo Name"
+                      label="Tpo Name"
+                      name="tpoNm"
                       fullWidth={true}
                       required
                     />
@@ -169,11 +169,10 @@ class ProductFormPage extends React.Component<
                     <Field
                       variant="outlined"
                       component={TextField}
-                      placeholder="Price"
-                      label="Price"
+                      placeholder="Tpo Type Name"
+                      label="Tpo Type Name"
                       fullWidth={true}
-                      type="number"
-                      name="unitPrice"
+                      name="tpoTypeNm"
                       required
                     />
                   </Grid>
@@ -181,19 +180,18 @@ class ProductFormPage extends React.Component<
                     <Field
                       variant="outlined"
                       component={TextField}
-                      placeholder="Quantity"
-                      label="Quantity"
+                      placeholder="Mgmt Tpo Code"
+                      label="Mgmt Tpo Code"
                       fullWidth={true}
-                      type="number"
-                      name="numInStock"
+                      name="mgmtTpoCd"
                       required
                     />
                   </Grid>
 
                   <Grid item style={styles.cell} xs={12} md={4}>
-                    {product && product.avatar && (
+                    {tpo && tpo.avatar && (
                       <Card style={styles.card}>
-                        <img width={100} src={product.avatar} alt="avatar"/>
+                        <img width={100} src={tpo.avatar} alt="avatar"/>
                       </Card>
                     )}
                   </Grid>
@@ -238,10 +236,10 @@ class ProductFormPage extends React.Component<
 }
 
 function mapStateToProps(state) {
-  const { product, isFetching, categoryList, deleted, updated } = state.product;
+  const { tpo, isFetching, categoryList, deleted, updated } = state.tpo;
 
   return {
-    product,
+    tpo,
     isFetching,
     categoryList,
     deleted,
@@ -251,9 +249,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getProduct: (action) => dispatch(thunkTpoApiQCall(action)),
-    saveProduct: (action) => dispatch(thunkTpoApiCall(action)),
+    getTpo: (action) => dispatch(thunkTpoApiQCall(action)),
+    saveTpo: (action) => dispatch(thunkTpoApiCall(action)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductFormPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TpoFormPage);

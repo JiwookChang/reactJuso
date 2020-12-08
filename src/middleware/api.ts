@@ -46,6 +46,20 @@ function parseRequest(req: string) {
   return { model, id, exp, filters }
 }
 
+function changeTpoTypeCd(req: number){
+  let changedCd = "";
+  if      (req ===3)  changedCd = "A";
+  else if (req ===5)  changedCd = "D";
+  else if (req ===6)  changedCd = "P";
+  else if (req ===8)  changedCd = "Q";
+  else if (req ===9)  changedCd = "T";
+  else if (req ===10) changedCd = "X";
+  else if (req ===11) changedCd = "f";
+  else changedCd = req.toString();
+
+  return changedCd
+}
+
 export function getData(action: string): Promise<TODO> {
   const { model, id, exp , filters} = parseRequest(action)
   return new Promise(function (resolve, _reject) {
@@ -56,9 +70,8 @@ export function getData(action: string): Promise<TODO> {
       : exp;
 
     
-      let result: TODO;
+    let result: TODO;
     let expand: string, expandId: number;
-    
     if (model in ds) {
       if (id && id > 0) {
         result =
@@ -104,35 +117,6 @@ export function getData(action: string): Promise<TODO> {
   });
 }
 
-export function getBackEndData(action: string): Promise<TODO> {
-  const { model, id, exp , filters} = parseRequest(action)
-  let params = querystring.parse(action);
-  let param = "";
-  if (params["name_like"]){
-    param = ""+params["name_like"];
-    param = param.trim();
-  }
-  
-  
-  const apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/findTpoListByTpoNm?tpoNm='+  param;
-  return new Promise(function (resolve, _reject) {
-    let result: TODO;
-    
-    axios.get(apiUrl)
-          .then(res => {
-            let allRepos = Array.from(res.data);
-            let i=1;
-            result = allRepos.map((m: { [x: string]: TODO }) => {
-              m["category"] = {"description": "국사정보", "id": i, "name": m["tpoTypeNm"], "picture": null};
-              m["id"]=i++;
-              return m;
-            });
-
-            setTimeout(resolve, 300, { data: result });
-          })
-  }); 
-}
-
 export function postData(action: string, data: Entity): Promise<TODO> {
   const { model } = parseRequest(action)
   return new Promise(function (resolve, _reject) {
@@ -160,6 +144,132 @@ export function deleteData(action: string): Promise<TODO> {
   });
 }
 
+export function getBackEndData(action: string): Promise<TODO> {
+  const { model, id, exp , filters} = parseRequest(action)
+  let params = querystring.parse(action);
+  let param = "";
+  let apiUrl = "";
+  let result: TODO;
+
+  if (params["name_like"]){
+    param = ""+params["name_like"];
+    param = param.trim();
+  }
+  
+  return new Promise(function (resolve, _reject) {
+    if(model==="categories"){
+      result = ds["tpoCategories"].map((m: { [x: string]: TODO }) => {
+        return m;
+      });
+      setTimeout(resolve, 100, { data: result });
+    }else{
+      if (id && id > 0) {
+        apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/findTpo/'+ id;
+        axios.get(apiUrl)
+              .then(res => {
+                result = res.data;
+                let i=1;
+                let categoryId: number;
+
+                result["id"]=Number.parseInt(result["tpoId"]);
+
+                if (result["tpoTypeCd"] ==="A")         categoryId = 3;
+                  else if (result["tpoTypeCd"] ==="D")  categoryId = 5;
+                  else if (result["tpoTypeCd"] ==="P")  categoryId = 6;
+                  else if (result["tpoTypeCd"] ==="Q")  categoryId = 8;
+                  else if (result["tpoTypeCd"] ==="T")  categoryId = 9;
+                  else if (result["tpoTypeCd"] ==="X")  categoryId = 10;
+                  else if (result["tpoTypeCd"] ==="f")  categoryId = 11;
+                  else                                    categoryId = Number.parseInt(result["tpoTypeCd"]);
+                result["categoryId"] = categoryId;
+                result["category"] = ds["tpoCategories"][ds["tpoCategories"].findIndex((d: { id: number }) => d.id === categoryId)];                
+                setTimeout(resolve, 100, { data: result });
+              })
+      }else{
+        apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/findTpoListByTpoNm?tpoNm='+  param;
+        axios.get(apiUrl)
+              .then(res => {
+                let allRepos = Array.from(res.data);
+                let categoryId: number;
+                result = allRepos.map((m: { [x: string]: TODO }) => {
+                  m["id"]=Number.parseInt(m["tpoId"]);
+
+                  if (m["tpoTypeCd"] ==="A")      categoryId = 3;
+                  else if (m["tpoTypeCd"] ==="D") categoryId = 5;
+                  else if (m["tpoTypeCd"] ==="P") categoryId = 6;
+                  else if (m["tpoTypeCd"] ==="Q") categoryId = 8;
+                  else if (m["tpoTypeCd"] ==="T") categoryId = 9;
+                  else if (m["tpoTypeCd"] ==="X") categoryId = 10;
+                  else if (m["tpoTypeCd"] ==="f") categoryId = 11;
+                  else                            categoryId = Number.parseInt(m["tpoTypeCd"]);
+                  m["categoryId"] = categoryId;
+                  
+                  return m;
+                });
+                setTimeout(resolve, 100, { data: result });
+              })
+      }
+    }
+    
+    
+  }); 
+}
+export function postBackEndData(action: string, data: Entity): Promise<TODO> {
+  console.log("********** postBackEndData : action >>>>" + action);
+  console.log("********** postBackEndData : data >>>>");
+  console.log(data);
+  console.log("data[tpoTypeCd] : "+data["tpoTypeCd"]);
+  return new Promise(function (resolve, _reject) {
+    let apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/registTpo';
+    // {
+    //  "tpoCd": "TEST01",
+    //  "tpoNm": "테스트국사",
+    //  "tpoTypeCd": "2",
+    //  "tpoTypeNm": "전송국사",
+    //  "mgmtTpoCd": "TEST01",
+    //  "useYn": "Y"
+    // }
+    
+    axios.post(apiUrl,{data})
+      .then(res => {
+        console.log(res.data);
+      })
+    setTimeout(resolve, 300, { data: data });
+  });
+}
+export function putBackEndData(action: string, data: Entity): Promise<TODO> {
+  console.log("********** putBackEndData : action >>>>" + action);
+  console.log("********** putBackEndData : data >>>>");
+  console.log(data);
+  console.log("********** putBackEndData : id >>>>"+ data["id"]);
+
+  return new Promise(function (resolve, _reject) {
+    let apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/updateTpo/'+data["id"];
+    
+    axios.put(apiUrl,{data})
+      .then(res => {
+        console.log(res.data);
+      })
+      
+    setTimeout(resolve, 300, { data: data });
+  });
+}
+
+export function deleteBackEndData(action: string): Promise<TODO> {
+  const { id } = parseRequest(action);
+  console.log("********** putBackEndData : action >>>>" + action);
+  console.log("********** putBackEndData : id >>>>"+ id);
+  return new Promise(function (resolve, _reject) {
+    let apiUrl = 'http://a9accac0b93c7456b826153fa2b7850d-596788161.ap-northeast-2.elb.amazonaws.com/tpo/deleteTpo/'+id;
+    axios.delete(apiUrl)
+      .then(res => {
+        console.log(res.data);
+      })
+      
+    setTimeout(resolve, 300, { data: id });
+  });
+}
+
 export function login(action: string, _method: HttpMethod, data: TODO): Promise<TODO> {
   return new Promise(function (resolve, _reject) {
     if (data.username === "oss@test.com" && data.password === "skcc") {
@@ -181,7 +291,6 @@ export function  callApi(endpoint, method: HttpMethod, data?: TODO, filters?: TO
   switch (method) {
     case HttpMethod.GET:
       return getData(endpoint);
-      // return getBackEndData(endpoint);
     case HttpMethod.PUT:
       return putData(endpoint, data);
     case HttpMethod.POST:
@@ -190,7 +299,6 @@ export function  callApi(endpoint, method: HttpMethod, data?: TODO, filters?: TO
       return deleteData(endpoint)
     default:
       return null;
-
   }
 }
 
@@ -199,17 +307,12 @@ export function  callTpoApi(endpoint, method: HttpMethod, data?: TODO, filters?:
     case HttpMethod.GET:
       return getBackEndData(endpoint);
     case HttpMethod.PUT:
-      return putData(endpoint, data);
+      return putBackEndData(endpoint, data);
     case HttpMethod.POST:
-      return postData(endpoint, data)
+      return postBackEndData(endpoint, data)
     case HttpMethod.DELETE:
-      return deleteData(endpoint)
+      return deleteBackEndData(endpoint)
     default:
       return null;
-
   }
-
 }
-
-export const CALL_API = Symbol("Call API")
-

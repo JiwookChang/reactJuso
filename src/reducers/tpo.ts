@@ -1,74 +1,74 @@
 import {
-  ProductState, ProductActionTypes,
-  CREATE_PRODUCT,
-  UPDATE_PRODUCT,
-  DELETE_PRODUCT,
-  GET_PRODUCT,
-  LIST_PRODUCT,
-  NEW_PRODUCT,
-  EDIT_PRODUCT,
-  FETCHING_PRODUCT
+  TpoState, TpoActionTypes,
+  CREATE_TPO,
+  UPDATE_TPO,
+  DELETE_TPO,
+  GET_TPO,
+  LIST_TPO,
+  NEW_TPO,
+  EDIT_TPO,
+  FETCHING_TPO
 } from '../store/types';
-import { Product, ProductModel } from '../types';
+import { Tpo, TpoModel } from '../types';
 
-export function productReducer(
-  state: ProductState = {
+export function tpoReducer(
+  state: TpoState = {
     isFetching: true,
-    product: new ProductModel() as Product, // {} as Product,
+    tpo: new TpoModel() as Tpo, // {} as Tpo,
     categoryList: [],
-    productList:[],
+    tpoList:[],
     deleted: false,
     updated: false,
   },
-  action: ProductActionTypes
+  action: TpoActionTypes
 ) {
-  // console.log(action)
+  console.log(action)
   switch (action.type) {
-    case FETCHING_PRODUCT:
+    case FETCHING_TPO:
       return Object.assign({}, state, {
         isFetching: true,
         errorMessage: "",
         deleted: false,
         updated:false,
       })
-    case LIST_PRODUCT:
+    case LIST_TPO:
       return Object.assign({}, state, {
         isFetching: false,
-        productList: action.payload,
+        tpoList: action.payload,
         errorMessage: "",
         deleted: false,
         updated:false
       })
       
-    case GET_PRODUCT:
+    case GET_TPO:
       return Object.assign({}, state, {
         isFetching: false,
-        product:action.payload,
+        tpo:action.payload,
         errorMessage: action.error,
         deleted: false,
         updated: false
       });
-    case NEW_PRODUCT:
-    case EDIT_PRODUCT:
-      const {product, categoryList} = action.payload
+    case NEW_TPO:
+    case EDIT_TPO:
+      const {tpo, categoryList} = action.payload
       return Object.assign({}, state, {
         isFetching: false,
-        product,
+        tpo,
         categoryList,
         errorMessage: action.error,
         deleted: false,
         updated: false
       });
-    case CREATE_PRODUCT:
-    case UPDATE_PRODUCT:
+    case CREATE_TPO:
+    case UPDATE_TPO:
       return Object.assign({}, state, {
         isFetching: false,
-        product: action.payload,
+        tpo: action.payload,
         errorMessage: action.error,
         deleted: false,
         updated: true
       });
-    case DELETE_PRODUCT:
+    case DELETE_TPO:
       return Object.assign({}, state, {
         isFetching: false,
         errorMessage: action.error,
